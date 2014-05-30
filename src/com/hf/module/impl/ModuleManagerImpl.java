@@ -19,6 +19,7 @@ import java.util.TimerTask;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -279,16 +280,18 @@ public class ModuleManagerImpl implements IModuleManager {
 					DatagramPacket recvPacket = new DatagramPacket(buffer,
 							buffer.length);
 					eventReceiver.receive(recvPacket);
-
+					
 					byte[] l1bytes = Arrays.copyOfRange(buffer, 0,
 							recvPacket.getLength());
 					if (l1bytes.length < 0) {
 						continue;
 					}
+					Log.e("recv", HexBin.bytesToStringWithSpace(l1bytes));
+					
 					Head1 h1 = new Head1();
 					h1.unpack(l1bytes);
 					String mac = h1.getMacString();
-
+					
 					T1Message msg = new T1Message();
 					// msg.setKey(AES.DEFAULT_KEY_128.getBytes());
 					// msg.unpack(l1bytes);
@@ -321,7 +324,7 @@ public class ModuleManagerImpl implements IModuleManager {
 						mi.setFactoryId(msg.getHead2().getComponyCode());
 						mi.setType(msg.getHead2().getModuleCode());
 
-						// LocalModuleInfoContainer.getInstance().put(mac, mi);
+						 //LocalModuleInfoContainer.getInstance().put(mac, mi);
 
 						if (!msg.getHead1().isRegistered()) {
 							// find a new dev

@@ -161,4 +161,23 @@ public class Setting extends Activity implements OnClickListener{
 			break;
 		}
 	}
+	
+	long fristPressTime = 0;
+	long secondPressTime = 0;
+	boolean isDoublepress = false;
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		if(!isDoublepress){
+			fristPressTime = System.currentTimeMillis();
+			Toast.makeText(this, "在按一次退出", Toast.LENGTH_SHORT).show();
+			isDoublepress = true;
+		}else{
+			secondPressTime = System.currentTimeMillis();
+			if(secondPressTime-fristPressTime<1000){
+				System.exit(0);
+			}
+			isDoublepress = false;
+		}
+	}
 }

@@ -24,6 +24,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,6 +38,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Smartlink extends Activity implements IEventListener{
+	
+	private Animation animi;
 	
 	private EditText ssid;
 	private EditText pswd;
@@ -200,6 +208,10 @@ public class Smartlink extends Activity implements IEventListener{
 		pswd = (EditText) findViewById(R.id.router_pswd);
 		pswd.setText(getSavedPswd(getSSID()));
 		start = (ImageButton) findViewById(R.id.start_smartlink);
+		animi  = AnimationUtils.loadAnimation(this, R.anim.smartlink_rot);  
+		LinearInterpolator lin = new LinearInterpolator();  
+		animi.setInterpolator(lin);  
+		
 		start.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -209,9 +221,11 @@ public class Smartlink extends Activity implements IEventListener{
 				if(isconnect){
 					//manager.stopSmartlink2();
 					manager.stopSmartlink();
+					start.clearAnimation();
 					isconnect = false;
 				}else{
 					isconnect = true;
+					start.startAnimation(animi);
 					new Thread(soundSmartlink).start();
 				}
 			}
@@ -309,6 +323,7 @@ public class Smartlink extends Activity implements IEventListener{
 		manager.unregisterEventListener(Smartlink.this);
 		if(isconnect){
 			manager.stopSmartlink2();
+			start.clearAnimation();
 		}
 		super.finish();
 	}

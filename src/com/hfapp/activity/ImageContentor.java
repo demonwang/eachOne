@@ -118,7 +118,7 @@ public class ImageContentor extends Activity{
 		{R.drawable.icon_xyj_outline,R.drawable.icon_xyj_close,R.drawable.icon_xyj_on},
 		{R.drawable.icon_wbl_outline,R.drawable.icon_wbl_close,R.drawable.icon_wbl_on},
 		{R.drawable.icon_tablight_outline,R.drawable.icon_tablight_cloase,R.drawable.icon_tablight_on},
-		{R.drawable.zigbee_icon,R.drawable.zigbee_icon,R.drawable.zigbee_icon,}
+		{R.drawable.zigbee_offine,R.drawable.zigbee_online_off,R.drawable.zigbee_online_open,}
 	};
 	
 	public static  int getOpenImageRs(int index){

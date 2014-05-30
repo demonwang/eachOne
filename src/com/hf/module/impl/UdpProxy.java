@@ -90,7 +90,7 @@ public class UdpProxy {
 		
 		public void open() {
 			try {
-				socket = new DatagramSocket();
+				socket = new DatagramSocket(port);
 				socket.setBroadcast(true);
 			} catch (SocketException e) {
 				e.printStackTrace();

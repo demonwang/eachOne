@@ -8,6 +8,7 @@ import com.hf.lib.util.HexBin;
 import com.hf.module.ModuleException;
 import com.hf.module.info.ModuleInfo;
 import com.hf.zgbee.util.Payload;
+import com.hf.zgbee.util.ZigbeeConfig;
 import com.hf.zgbee.util.zigbeeModuleHelper;
 import com.hf.zigbee.Info.ZigbeeNodeInfo;
 import com.hfapp.view.ZigbeeColorPicker;
@@ -74,6 +75,8 @@ public class LightCtrl extends Activity{
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 1:
+				if(znodes==null)
+					break;
 				if(znodes.size()>0){
 					for(ZigbeeColorPicker zcp :zcps){
 						colorContent.removeView(zcp);
@@ -86,12 +89,12 @@ public class LightCtrl extends Activity{
 						}
 						currPIC = zc;
 						zc.setSelect();
-						if(znodes.get(i).getOnline_state()==0)
-							break;
+						if(znodes.get(i).getOnline_state()!=3)
+							continue;
 						
 						Log.e("location", HexBin.bytesToStringWithSpace(znodes.get(i).getDeviceStates()));
 						Location l = getColorLocation((znodes.get(i).getcolorX()&0x00ffff),(znodes.get(i).getcolorY()&0xffff));
-						 RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(40,40);
+						 RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(80,80);
 						 lp1.leftMargin = l.x;
 						 lp1.topMargin = l.y;
 						 text.setBackgroundColor(getColor(l.x,l.y));
@@ -196,7 +199,7 @@ public class LightCtrl extends Activity{
 				break;
 			case 2:
 			case 3:
-				level.setProgress(currPIC.getZigbeeNodeInfo().getLevle());
+				level.setProgress(currPIC.getZigbeeNodeInfo().getLevle()&0x00ff);
 				break;
 			case 4:
 				text.setBackgroundColor(thiscolor);
@@ -211,7 +214,8 @@ public class LightCtrl extends Activity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.zigbee_lightctrl_activity);
-		zhlper = new zigbeeModuleHelper(getIntent().getStringExtra("mac"));
+		mac = getIntent().getStringExtra("mac");
+		zhlper = new zigbeeModuleHelper(mac);
 		initActionbar();
 		initViews();
 	}
@@ -220,7 +224,18 @@ public class LightCtrl extends Activity{
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		initData();
+		hand.postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				/*
+				 * 加载太快 会获取不到 color的宽高
+				 * */
+				hand.sendEmptyMessage(1);
+			}
+		}, 1000);
+//		initData();
 	}
 	
 	private void initActionbar() {
@@ -265,6 +280,10 @@ public class LightCtrl extends Activity{
 	}
 	
 	private void initViews(){
+		
+		
+		znodes = ZigbeeConfig.znodes.get(mac);
+		
 		color = (ImageView) findViewById(R.id.color);
 		level = (SeekBar) findViewById(R.id.level);
 	//	zc = (ZigbeeColorPicker) findViewById(R.id.zc);
@@ -278,7 +297,7 @@ public class LightCtrl extends Activity{
 			}
 		});
 		text = (TextView) findViewById(R.id.text);
-		
+		text.setVisibility(View.GONE);
 		colorBitmap  = BitmapFactory.decodeResource(getResources(), R.drawable.light_ctrl_2);
 		colorBitmapwidth = colorBitmap.getWidth();
 		colorBitmaphight = colorBitmap.getHeight();
@@ -332,22 +351,22 @@ public class LightCtrl extends Activity{
 	}
 	
 
-	private void initData(){
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				try {
-					znodes = zhlper.getAllNodes();
-					hand.sendEmptyMessage(1);
-				} catch (ModuleException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}).start();
-	} 
+//	private void initData(){
+//		new Thread(new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//				try {
+//					znodes = zhlper.getAllNodes();
+//					hand.sendEmptyMessage(1);
+//				} catch (ModuleException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//		}).start();
+//	} 
 	
 	
 	private void doSendColorConfig(){
@@ -400,10 +419,17 @@ public class LightCtrl extends Activity{
 		int x;
 		int y;
 		Location(int x,int y){
+			
+			Log.e("location", x+":"+y);
+			int width2 = color.getWidth()-80;
+			int height2 = color.getHeight()-80;
+			if(x>width2){
+				x = width2;
+			}
+			if(y>height2)
+				y = height2;
 			this.x = x;
 			this.y = y;
-			Log.e("location", x+":"+y);
-			
 		}
 	}
 	

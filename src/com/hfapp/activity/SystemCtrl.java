@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.example.palytogether.R;
 import com.hf.module.ModuleException;
 import com.hf.soundSmartLink.MyAudioTrack;
+import com.hf.zgbee.util.ZigbeeConfig;
 import com.hf.zgbee.util.zigbeeModuleHelper;
 import com.hf.zigbee.Info.ZigbeeNodeInfo;
 
@@ -79,9 +80,10 @@ public class SystemCtrl extends Activity{
 		initActionbar();
 		initView();
 		jionDialog = new AlertDialog.Builder(this).create();
-		jionDialog.setCancelable(false);
+		//jionDialog.setCancelable(false);
 		jionDialog.setCanceledOnTouchOutside(false);
 		jionDialog.setTitle("Waiting.....");
+		znodes = ZigbeeConfig.znodes.get(mac);
 	}
 	
 	private void initActionbar() {
@@ -137,22 +139,23 @@ public class SystemCtrl extends Activity{
 				}).start();
 			}
 		});
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				try {
-					Log.i("SysCtrl", "getNodes");
-					znodes = zhelper.getAllNodes();
-					Log.i("SysCtrl", "getNodes:"+znodes.size());
-					hand.sendEmptyMessage(1);
-				} catch (ModuleException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}).start();
+		hand.sendEmptyMessage(1);
+//		new Thread(new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//				try {
+//					Log.i("SysCtrl", "getNodes");
+//					znodes = zhelper.getAllNodes();
+//					Log.i("SysCtrl", "getNodes:"+znodes.size());
+//					hand.sendEmptyMessage(1);
+//				} catch (ModuleException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//		}).start();
 	}
 	
 	class ZBaseAdpt extends BaseAdapter{

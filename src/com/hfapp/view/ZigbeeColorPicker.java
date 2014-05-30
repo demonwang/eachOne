@@ -39,9 +39,9 @@ public class ZigbeeColorPicker extends View  {
 	private void init() {
 		// TODO Auto-generated method stub
 		mpaint = new Paint();
-		x = 20;
-		y = 20;
-		r = 20;
+		x = 40;
+		y = 40;
+		r = 40;
 		mpaint.setColor(Color.RED);
 	}
 

@@ -18,6 +18,7 @@ import com.example.palytogether.MainActivity;
 import com.example.palytogether.R;
 import com.hf.module.impl.KeyValueHelper;
 import com.hf.module.info.ModuleInfo;
+import com.hf.module.info.ModuleKeyValue;
 import com.hfapp.activity.ImageContentor;
 import com.hfapp.activity.LightModuleInfo;
 
@@ -97,6 +98,8 @@ public class ModuleListView extends FrameLayout {
 			{
 				view = new ZigbeeModuleView(getContext(), addToWhichSide);
 				view.moduleImage.setBackgroundResource(ImageContentor.getOpenImageRs(10));
+				ModuleKeyValue mkv = new ModuleKeyValue(i, 10);
+				KeyValueHelper.getInstence().put(list.get(i).getMac(), mkv);
 			}else {
 				view = new GPIOModuleView(getContext(),addToWhichSide);
 				view.moduleImage.setBackgroundResource(ImageContentor.getOutLineImageRs(KeyValueHelper.getInstence().get(list.get(i).getMac()).getIndex()));
