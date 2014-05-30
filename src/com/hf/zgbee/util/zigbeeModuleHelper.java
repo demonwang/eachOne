@@ -3,6 +3,9 @@ package com.hf.zgbee.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.util.Log;
+
+import com.hf.lib.util.HexBin;
 import com.hf.module.IModuleManager;
 import com.hf.module.ManagerFactory;
 import com.hf.module.ModuleException;
@@ -190,6 +193,7 @@ public class zigbeeModuleHelper {
 			throw new ModuleException();
 		}
 		ZigbeeGetNodesInfoRsp rsp = new ZigbeeGetNodesInfoRsp();
+		Log.i("getAllNodes", HexBin.bytesToString(t2rspcmd));
 		rsp.unpack(ZigbeeT2CmdPacker.unpackT2(t2rspcmd));
 		return rsp.getInfos();
 	}

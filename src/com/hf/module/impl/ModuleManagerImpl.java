@@ -286,7 +286,7 @@ public class ModuleManagerImpl implements IModuleManager {
 					if (l1bytes.length < 0) {
 						continue;
 					}
-					Log.e("recv", HexBin.bytesToStringWithSpace(l1bytes));
+					//Log.e("recv", HexBin.bytesToStringWithSpace(l1bytes));
 					
 					Head1 h1 = new Head1();
 					h1.unpack(l1bytes);

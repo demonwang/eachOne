@@ -331,6 +331,8 @@ public class LightCtrl extends Activity{
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
+						if(currPIC == null)
+							return ;
 						Payload pl = new Payload();
 						pl.setAttr((byte) 0x01);
 						pl.setLevel((byte) progress);
