@@ -133,14 +133,17 @@ public class Smartlink extends Activity implements IEventListener{
 						mi.setAccessKey(ModuleConfig.accessKey);
 						mi.setLocalKey(ModuleConfig.localModulePswd);
 						mi.setName(mi.getMac().substring(4));
+						
 						try{
 							mi = manager.setModule(mi);
+							mi.setFactoryId((int) ModuleConfig.factoryId);
 						}catch(ModuleException e){
 							
 						}
+					
+					manager.getHelper().setModulePSWD(mi);
+					manager.getHelper().setServAdd(mi,ModuleConfig.cloudsericeIp ,ModuleConfig.cloudservicePort);
 					LocalModuleInfoContainer.getInstance().put(mi.getMac(), mi);
-					manager.getHelper().setModulePSWD(mi.getMac());
-					manager.getHelper().setServAdd(mi.getMac(),ModuleConfig.cloudsericeIp ,ModuleConfig.cloudservicePort);
 					hand.sendEmptyMessage(1);
 				} catch (ModuleException e) {
 					// TODO Auto-generated catch block

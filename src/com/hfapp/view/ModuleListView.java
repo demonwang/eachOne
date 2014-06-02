@@ -1,6 +1,7 @@
 package com.hfapp.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -19,6 +20,7 @@ import com.example.palytogether.R;
 import com.hf.module.impl.KeyValueHelper;
 import com.hf.module.info.ModuleInfo;
 import com.hf.module.info.ModuleKeyValue;
+import com.hf.zigbee.Info.StatusInfo;
 import com.hfapp.activity.ImageContentor;
 import com.hfapp.activity.LightModuleInfo;
 
@@ -34,7 +36,7 @@ public class ModuleListView extends FrameLayout {
 	private ScrollView m_scrollview;
 	private int moduleCount = 0;
 	private ArrayList<BaseModuleView> viewList = new ArrayList<BaseModuleView>();
-	
+	public static  HashMap<String , StatusInfo> stats = new HashMap<String, StatusInfo>();
 	
 	public ModuleListView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
@@ -97,7 +99,21 @@ public class ModuleListView extends FrameLayout {
 			if(list.get(i).getType() == 0x109) //0x0109 zigbee
 			{
 				view = new ZigbeeModuleView(getContext(), addToWhichSide);
-				view.moduleImage.setBackgroundResource(ImageContentor.getCloseImageRs(10));
+				StatusInfo s = stats.get(list.get(i).getMac());
+				if(s==null)
+					view.moduleImage.setBackgroundResource(ImageContentor.getCloseImageRs(10));
+				else{
+					
+					if(s.isonline){
+						if(s.isopen){
+							view.moduleImage.setBackgroundResource(ImageContentor.getOpenImageRs(10));
+						}else{
+							view.moduleImage.setBackgroundResource(ImageContentor.getCloseImageRs(10));
+						}
+					}else{
+						view.moduleImage.setBackgroundResource(ImageContentor.getOutLineImageRs(10));
+					}
+				}
 				ModuleKeyValue mkv = new ModuleKeyValue(i, 10);
 				KeyValueHelper.getInstence().put(list.get(i).getMac(), mkv);
 			}else {

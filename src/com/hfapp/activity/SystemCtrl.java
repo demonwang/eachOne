@@ -8,6 +8,7 @@ import com.hf.soundSmartLink.MyAudioTrack;
 import com.hf.zgbee.util.ZigbeeConfig;
 import com.hf.zgbee.util.zigbeeModuleHelper;
 import com.hf.zigbee.Info.ZigbeeNodeInfo;
+import com.hfapp.view.ColorPickerDialog;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -20,6 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -118,9 +121,19 @@ public class SystemCtrl extends Activity{
 		// TODO Auto-generated method stub
 		z_list = (ListView) findViewById(R.id.z_list);
 		z_add = (ImageButton)findViewById(R.id.z_add);
+		final ColorPickerDialog cp = new ColorPickerDialog(this, "asdf", null);
 		z_list_adpt = new ZBaseAdpt();
 		z_list.setItemsCanFocus(true);
 		z_list.setAdapter(z_list_adpt);
+		z_list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				cp.show();
+			}
+		});
 		z_add.setOnClickListener(new OnClickListener() {
 			
 			@Override

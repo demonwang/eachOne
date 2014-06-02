@@ -10,6 +10,7 @@ import com.hf.module.info.ModuleInfo;
 import com.hf.zgbee.util.Payload;
 import com.hf.zgbee.util.ZigbeeConfig;
 import com.hf.zgbee.util.zigbeeModuleHelper;
+import com.hf.zigbee.Info.StatusInfo;
 import com.hf.zigbee.Info.ZigbeeNodeInfo;
 import com.hfapp.activity.ImageContentor;
 import com.hfapp.activity.ZigbeeModuleInfoActivity;
@@ -63,6 +64,7 @@ public class ZigbeeModuleView extends BaseModuleView{
 	@Override
 	protected void updateStatus() {
 		// TODO Auto-generated method stub
+		//moduleImage.setImageResource(resId);
 		new Thread(new Runnable() {
 			
 			@Override
@@ -81,6 +83,11 @@ public class ZigbeeModuleView extends BaseModuleView{
 					hand.sendEmptyMessage(2);
 					isonline = false;
 				}
+				
+				StatusInfo s = new StatusInfo();
+				s.isonline = isonline;
+				s.isopen = isopen;
+				ModuleListView.stats.put(m_moduleinfo.getMac(), s);
 				hand.sendEmptyMessage(1);
 			}
 		}).start();
@@ -174,6 +181,12 @@ public class ZigbeeModuleView extends BaseModuleView{
 				// TODO Auto-generated method stub
 				Payload pl = new Payload();
 				pl.setAttr((byte) 0x00);
+				if(nodes.size()<=0)
+				{
+					 isopen = false;
+					 hand.sendEmptyMessage(1);
+					 return;
+				}
 				try{
 					if(isopen){
 						for (int i = 0; i < nodes.size(); i++) {

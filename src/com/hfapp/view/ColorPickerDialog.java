@@ -20,15 +20,15 @@ public class ColorPickerDialog extends Dialog {
 	private final String TAG = "ColorPicker";
 	
 	Context context;
-	private String title;//标题
-	private int mInitialColor;//初始颜色
+	private String title;//鏍囬
+	private int mInitialColor;//鍒濆棰滆壊
     private OnColorChangedListener mListener;
 
 	/**
-     * 初始颜色黑色
+     * 鍒濆棰滆壊榛戣壊
      * @param context
-     * @param title 对话框标题
-     * @param listener 回调
+     * @param title 瀵硅瘽妗嗘爣棰�
+     * @param listener 鍥炶皟
      */
     public ColorPickerDialog(Context context, String title, 
     		OnColorChangedListener listener) {
@@ -38,9 +38,9 @@ public class ColorPickerDialog extends Dialog {
     /**
      * 
      * @param context
-     * @param initialColor 初始颜色
-     * @param title 标题
-     * @param listener 回调
+     * @param initialColor 鍒濆棰滆壊
+     * @param title 鏍囬
+     * @param listener 鍥炶皟
      */
     public ColorPickerDialog(Context context, int initialColor, 
     		String title, OnColorChangedListener listener) {
@@ -63,29 +63,29 @@ public class ColorPickerDialog extends Dialog {
     }
     
     private class ColorPickerView extends View {
-    	private Paint mPaint;//渐变色环画笔
-    	private Paint mCenterPaint;//中间圆画笔
-    	private Paint mLinePaint;//分隔线画笔
-    	private Paint mRectPaint;//渐变方块画笔
+    	private Paint mPaint;//娓愬彉鑹茬幆鐢荤瑪
+    	private Paint mCenterPaint;//涓棿鍦嗙敾绗�
+    	private Paint mLinePaint;//鍒嗛殧绾跨敾绗�
+    	private Paint mRectPaint;//娓愬彉鏂瑰潡鐢荤瑪
     	
-    	private Shader rectShader;//渐变方块渐变图像
-    	private float rectLeft;//渐变方块左x坐标
-    	private float rectTop;//渐变方块右x坐标
-    	private float rectRight;//渐变方块上y坐标
-    	private float rectBottom;//渐变方块下y坐标
+    	private Shader rectShader;//娓愬彉鏂瑰潡娓愬彉鍥惧儚
+    	private float rectLeft;//娓愬彉鏂瑰潡宸鍧愭爣
+    	private float rectTop;//娓愬彉鏂瑰潡鍙硏鍧愭爣
+    	private float rectRight;//娓愬彉鏂瑰潡涓妝鍧愭爣
+    	private float rectBottom;//娓愬彉鏂瑰潡涓媦鍧愭爣
         
-    	private final int[] mCircleColors;//渐变色环颜色
-    	private final int[] mRectColors;//渐变方块颜色
+    	private final int[] mCircleColors;//娓愬彉鑹茬幆棰滆壊
+    	private final int[] mRectColors;//娓愬彉鏂瑰潡棰滆壊
     	
-    	private int mHeight;//View高
-    	private int mWidth;//View宽
-    	private float r;//色环半径(paint中部)
-    	private float centerRadius;//中心圆半径
+    	private int mHeight;//View楂�
+    	private int mWidth;//View瀹�
+    	private float r;//鑹茬幆鍗婂緞(paint涓儴)
+    	private float centerRadius;//涓績鍦嗗崐寰�
     	
-    	private boolean downInCircle = true;//按在渐变环上
-    	private boolean downInRect;//按在渐变方块上
-    	private boolean highlightCenter;//高亮
-    	private boolean highlightCenterLittle;//微亮
+    	private boolean downInCircle = true;//鎸夊湪娓愬彉鐜笂
+    	private boolean downInRect;//鎸夊湪娓愬彉鏂瑰潡涓�
+    	private boolean highlightCenter;//楂樹寒
+    	private boolean highlightCenterLittle;//寰寒
     	
 		public ColorPickerView(Context context, int height, int width) {
 			super(context);
@@ -94,7 +94,7 @@ public class ColorPickerDialog extends Dialog {
 			setMinimumHeight(height - 36);
 			setMinimumWidth(width);
 			
-			//渐变色环参数
+			//娓愬彉鑹茬幆鍙傛暟
 	    	mCircleColors = new int[] {0xFFFF0000, 0xFFFF00FF, 0xFF0000FF, 
 	    			0xFF00FFFF, 0xFF00FF00,0xFFFFFF00, 0xFFFF0000};
 	    	Shader s = new SweepGradient(0, 0, mCircleColors, null);
@@ -104,18 +104,18 @@ public class ColorPickerDialog extends Dialog {
             mPaint.setStrokeWidth(50);
             r = width / 2 * 0.7f - mPaint.getStrokeWidth() * 0.5f;
             
-            //中心圆参数
+            //涓績鍦嗗弬鏁�
             mCenterPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             mCenterPaint.setColor(mInitialColor);
             mCenterPaint.setStrokeWidth(5);
             centerRadius = (r - mPaint.getStrokeWidth() / 2 ) * 0.7f;
             
-            //边框参数
+            //杈规鍙傛暟
             mLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             mLinePaint.setColor(Color.parseColor("#72A1D1"));
             mLinePaint.setStrokeWidth(4);
             
-            //黑白渐变参数
+            //榛戠櫧娓愬彉鍙傛暟
             mRectColors = new int[]{0xFF000000, mCenterPaint.getColor(), 0xFFFFFFFF};
             mRectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             mRectPaint.setStrokeWidth(5);
@@ -128,11 +128,11 @@ public class ColorPickerDialog extends Dialog {
 
 		@Override
 		protected void onDraw(Canvas canvas) {
-			//移动中心
+			//绉诲姩涓績
             canvas.translate(mWidth / 2, mHeight / 2 - 50);
-            //画中心圆
+            //鐢讳腑蹇冨渾
             canvas.drawCircle(0, 0, centerRadius,  mCenterPaint);
-            //是否显示中心圆外的小圆环
+            //鏄惁鏄剧ず涓績鍦嗗鐨勫皬鍦嗙幆
             if (highlightCenter || highlightCenterLittle) {
                 int c = mCenterPaint.getColor();
                 mCenterPaint.setStyle(Paint.Style.STROKE);
@@ -147,9 +147,9 @@ public class ColorPickerDialog extends Dialog {
                 mCenterPaint.setStyle(Paint.Style.FILL);
                 mCenterPaint.setColor(c);
             }
-            //画色环
+            //鐢昏壊鐜�
             canvas.drawOval(new RectF(-r, -r, r, r), mPaint);
-            //画黑白渐变块
+            //鐢婚粦鐧芥笎鍙樺潡
             if(downInCircle) {
             	mRectColors[1] = mCenterPaint.getColor();
             }
@@ -158,13 +158,13 @@ public class ColorPickerDialog extends Dialog {
             canvas.drawRect(rectLeft, rectTop, rectRight, rectBottom, mRectPaint);
             float offset = mLinePaint.getStrokeWidth() / 2;
             canvas.drawLine(rectLeft - offset, rectTop - offset * 2, 
-            		rectLeft - offset, rectBottom + offset * 2, mLinePaint);//左
+            		rectLeft - offset, rectBottom + offset * 2, mLinePaint);//宸�
             canvas.drawLine(rectLeft - offset * 2, rectTop - offset, 
-            		rectRight + offset * 2, rectTop - offset, mLinePaint);//上
+            		rectRight + offset * 2, rectTop - offset, mLinePaint);//涓�
             canvas.drawLine(rectRight + offset, rectTop - offset * 2, 
-            		rectRight + offset, rectBottom + offset * 2, mLinePaint);//右
+            		rectRight + offset, rectBottom + offset * 2, mLinePaint);//鍙�
             canvas.drawLine(rectLeft - offset * 2, rectBottom + offset, 
-            		rectRight + offset * 2, rectBottom + offset, mLinePaint);//下
+            		rectRight + offset * 2, rectBottom + offset, mLinePaint);//涓�
 			super.onDraw(canvas);
 		}
 		
@@ -183,22 +183,22 @@ public class ColorPickerDialog extends Dialog {
                 	downInRect = inRect;
                 	highlightCenter = inCenter;
                 case MotionEvent.ACTION_MOVE:
-                	if(downInCircle && inCircle) {//down按在渐变色环内, 且move也在渐变色环内
+                	if(downInCircle && inCircle) {//down鎸夊湪娓愬彉鑹茬幆鍐� 涓攎ove涔熷湪娓愬彉鑹茬幆鍐�
                 		float angle = (float) Math.atan2(y, x);
                         float unit = (float) (angle / (2 * Math.PI));
                         if (unit < 0) {
                             unit += 1;
                         }
 	               		mCenterPaint.setColor(interpCircleColor(mCircleColors, unit));
-	               		if(debug) Log.v(TAG, "色环内, 坐标: " + x + "," + y);
-                	}else if(downInRect && inRect) {//down在渐变方块内, 且move也在渐变方块内
+	               		if(debug) Log.v(TAG, "鑹茬幆鍐� 鍧愭爣: " + x + "," + y);
+                	}else if(downInRect && inRect) {//down鍦ㄦ笎鍙樻柟鍧楀唴, 涓攎ove涔熷湪娓愬彉鏂瑰潡鍐�
                 		mCenterPaint.setColor(interpRectColor(mRectColors, x));
                 	}
-                	if(debug) Log.v(TAG, "[MOVE] 高亮: " + highlightCenter + "微亮: " + highlightCenterLittle + " 中心: " + inCenter);
-                	if((highlightCenter && inCenter) || (highlightCenterLittle && inCenter)) {//点击中心圆, 当前移动在中心圆
+                	if(debug) Log.v(TAG, "[MOVE] 楂樹寒: " + highlightCenter + "寰寒: " + highlightCenterLittle + " 涓績: " + inCenter);
+                	if((highlightCenter && inCenter) || (highlightCenterLittle && inCenter)) {//鐐瑰嚮涓績鍦� 褰撳墠绉诲姩鍦ㄤ腑蹇冨渾
                 		highlightCenter = true;
                 		highlightCenterLittle = false;
-                	} else if(highlightCenter || highlightCenterLittle) {//点击在中心圆, 当前移出中心圆
+                	} else if(highlightCenter || highlightCenterLittle) {//鐐瑰嚮鍦ㄤ腑蹇冨渾, 褰撳墠绉诲嚭涓績鍦�
                 		highlightCenter = false;
                 		highlightCenterLittle = true;
                 	} else {
@@ -208,7 +208,7 @@ public class ColorPickerDialog extends Dialog {
                    	invalidate();
                 	break;
                 case MotionEvent.ACTION_UP:
-                	if(highlightCenter && inCenter) {//点击在中心圆, 且当前启动在中心圆
+                	if(highlightCenter && inCenter) {//鐐瑰嚮鍦ㄤ腑蹇冨渾, 涓斿綋鍓嶅惎鍔ㄥ湪涓績鍦�
                 		if(mListener != null) {
                 			mListener.colorChanged(mCenterPaint.getColor());
                     		ColorPickerDialog.this.dismiss();
@@ -238,11 +238,11 @@ public class ColorPickerDialog extends Dialog {
 		}
 
 		/**
-		 * 坐标是否在色环上
-		 * @param x 坐标
-		 * @param y 坐标
-		 * @param outRadius 色环外半径
-		 * @param inRadius 色环内半径
+		 * 鍧愭爣鏄惁鍦ㄨ壊鐜笂
+		 * @param x 鍧愭爣
+		 * @param y 鍧愭爣
+		 * @param outRadius 鑹茬幆澶栧崐寰�
+		 * @param inRadius 鑹茬幆鍐呭崐寰�
 		 * @return
 		 */
 		private boolean inColorCircle(float x, float y, float outRadius, float inRadius) {
@@ -257,10 +257,10 @@ public class ColorPickerDialog extends Dialog {
 		}
 		
 		/**
-		 * 坐标是否在中心圆上
-		 * @param x 坐标
-		 * @param y 坐标
-		 * @param centerRadius 圆半径
+		 * 鍧愭爣鏄惁鍦ㄤ腑蹇冨渾涓�
+		 * @param x 鍧愭爣
+		 * @param y 鍧愭爣
+		 * @param centerRadius 鍦嗗崐寰�
 		 * @return
 		 */
 		private boolean inCenter(float x, float y, float centerRadius) {
@@ -274,7 +274,7 @@ public class ColorPickerDialog extends Dialog {
 		}
 		
 		/**
-		 * 坐标是否在渐变色中
+		 * 鍧愭爣鏄惁鍦ㄦ笎鍙樿壊涓�
 		 * @param x
 		 * @param y
 		 * @return
@@ -288,7 +288,7 @@ public class ColorPickerDialog extends Dialog {
 		}
 		
 		/**
-		 * 获取圆环上颜色
+		 * 鑾峰彇鍦嗙幆涓婇鑹�
 		 * @param colors
 		 * @param unit
 		 * @return
@@ -317,7 +317,7 @@ public class ColorPickerDialog extends Dialog {
         }
 		
 		/**
-		 * 获取渐变块上颜色
+		 * 鑾峰彇娓愬彉鍧椾笂棰滆壊
 		 * @param colors
 		 * @param x
 		 * @return
@@ -347,16 +347,16 @@ public class ColorPickerDialog extends Dialog {
     }
     
     /**
-     * 回调接口
+     * 鍥炶皟鎺ュ彛
      * @author <a href="clarkamx@gmail.com">LynK</a>
      * 
-     * Create on 2012-1-6 上午8:21:05
+     * Create on 2012-1-6 涓婂崍8:21:05
      *
      */
     public interface OnColorChangedListener {
     	/**
-    	 * 回调函数
-    	 * @param color 选中的颜色
+    	 * 鍥炶皟鍑芥暟
+    	 * @param color 閫変腑鐨勯鑹�
     	 */
         void colorChanged(int color);
     }

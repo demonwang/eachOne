@@ -188,7 +188,7 @@ public class ModuleInfo implements java.io.Serializable{
     }
 
     public Integer getFactoryId() {
-        return factoryId;
+        return this.factoryId;
     }
 
     public void setFactoryId(Integer factoryId) {

@@ -375,7 +375,7 @@ public class ModuleHelper {
 		Head2 h2 = new Head2();
 		h2.setVersion(0x1);
 		h2.setReserved(0);
-		h2.setComponyCode(ModuleConfig.factoryId);
+		h2.setComponyCode(mi.getFactoryId());
 		h2.setModuleCode(mi.getType());
 
 		send.setHead1(h1);
@@ -399,6 +399,42 @@ public class ModuleHelper {
 				AES.DEFAULT_KEY_128.getBytes());
 
 	}
+	
+public byte[] setModulePSWD(ModuleInfo mi) throws ModuleException {
+		
+		ModuleException mx = new ModuleException();
+		T1Message send = new T1Message();
+		Head1 h1 = new Head1();
+		h1.setId(T1Message.ID_LOCAL_ADD_MODULE);
+		h1.setFlag((byte) 0x41);
+		h1.setMac(mi.getMac());
+		Head2 h2 = new Head2();
+		h2.setVersion(0x1);
+		h2.setReserved(0);
+		h2.setComponyCode(mi.getFactoryId());
+		h2.setModuleCode(mi.getType());
+
+		send.setHead1(h1);
+		send.setHead2(h2);
+		ByteBuffer key = ByteBuffer.allocate(17);
+		key.put((byte) 0x10);
+		key.put(ModuleConfig.localModulePswd.getBytes());
+		send.setPayload(key.array());
+
+		send.setKey(AES.DEFAULT_KEY_128.getBytes());
+		byte[] cmd;
+		try {
+			cmd = send.pack();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			mx.setErrorCode(-36); // cmd pack err
+			throw mx;
+		}
+		System.out.println(mi.getMac() + "������������������������---------->OK");
+		return UdpProxy.getInstance().send(cmd, mi.getLocalIp(),
+				AES.DEFAULT_KEY_128.getBytes());
+
+	}
 
 	public byte[] setServAdd(String mac, String servadd, int port)
 			throws ModuleException {
@@ -416,6 +452,60 @@ public class ModuleHelper {
 		h2.setReserved(0);
 		h2.setSn(0);
 		h2.setComponyCode(ModuleConfig.factoryId);
+		h2.setModuleCode(mi.getFactoryId());
+		send.setHead1(h1);
+		send.setHead2(h2);
+
+		byte[] add = servadd.getBytes();
+		ByteBuffer pay = ByteBuffer.allocate(add.length + 12);
+		try {
+			pay.put(intToByteArray(port));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			mx.setErrorCode(-36);
+			throw mx;
+		}
+
+		pay.put(new byte[8]);
+		try {
+			pay.put(intToByteArray(add.length));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			mx.setErrorCode(-36);
+			throw mx;
+		}
+		pay.put(add);
+
+		send.setPayload(pay.array());
+
+		if (mi != null)
+			send.setKey(mi.getLocalKey().getBytes());
+		byte[] cmd;
+		try {
+			cmd = send.pack();
+		} catch (Exception e) {
+			mx.setErrorCode(-36);
+			throw mx;
+		}
+		System.out.println(mac + "���������������������������������������������������----------->OK");
+		return UdpProxy.getInstance().send(cmd, mi.getLocalIp(),
+				mi.getLocalKey().getBytes());
+	}
+	public byte[] setServAdd(ModuleInfo mi, String servadd, int port)
+			throws ModuleException {
+		String mac = mi.getMac();
+		ModuleException mx = new ModuleException();
+		System.out.println(mi.toString());
+		T1Message send = new T1Message();
+		Head1 h1 = new Head1();
+		Head2 h2 = new Head2();
+		h1.setId((byte) 0x0A);
+		h1.setFlag((byte) 0x41);
+		h1.setMac(mac);
+		h2.setVersion(1);
+		h2.setReserved(0);
+		h2.setSn(0);
+		h2.setComponyCode(mi.getFactoryId());
 		h2.setModuleCode(mi.getType());
 		send.setHead1(h1);
 		send.setHead2(h2);
