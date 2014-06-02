@@ -107,13 +107,13 @@ public class LightCtrl extends Activity{
 							level.setProgress(leveldefPro);
 						}
 						zc.setOnTouchListener(new OnTouchListener() {
-							int lastX, lastY;//ÉÏ´Î´¥Ãþ×ø±ê	
+							int lastX, lastY;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½	
 							
 							@Override
 							public boolean onTouch(View v, MotionEvent event) {
 								int ea=event.getAction(); 
 								int left,right,top,bottom;
-								if(range_width==0){//Î´³õÊ¼»¯
+								if(range_width==0){//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 									
 									range_width = color.getWidth();
 									range_hight = color.getHeight();
@@ -122,7 +122,7 @@ public class LightCtrl extends Activity{
 									picker_w = v.getWidth();
 								}
 								switch(ea){
-								case MotionEvent.ACTION_DOWN://°´ÏÂ
+								case MotionEvent.ACTION_DOWN://ï¿½ï¿½ï¿½ï¿½
 									Log.e("picker", "ACTION_DOWN1");
 									if(currPIC!=null){
 										currPIC.setUnselect();
@@ -133,9 +133,9 @@ public class LightCtrl extends Activity{
 									lastY = (int) event.getRawY(); 
 									hand.sendEmptyMessage(3);
 									
-									//colorContent.requestDisallowInterceptTouchEvent(true);//Í¨Öª¸¸¿Ø¼þÎðÀ¹½Ø±¾¿Ø¼þtouchÊÂ¼þ
+									//colorContent.requestDisallowInterceptTouchEvent(true);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½touchï¿½ï¿½ï¿½ï¿½
 									break;
-								case MotionEvent.ACTION_MOVE://ÍÏ¶¯
+								case MotionEvent.ACTION_MOVE://ï¿½ï¿½ï¿½ï¿½
 									Log.e("picker", "ACTION_MOVE");
 									int dx =(int)event.getRawX() - lastX;
 									int dy =(int)event.getRawY() - lastY;	
@@ -176,7 +176,7 @@ public class LightCtrl extends Activity{
 									Log.e("layout", left+","+top+","+right+","+bottom);
 									lastX = (int) event.getRawX();
 									lastY = (int) event.getRawY();
-									//colorContent.requestDisallowInterceptTouchEvent(true);//Í¨Öª¸¸¿Ø¼þÎðÀ¹½Ø±¾¿Ø¼þtouchÊÂ¼þ
+									//colorContent.requestDisallowInterceptTouchEvent(true);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½touchï¿½ï¿½ï¿½ï¿½
 									break;
 								case MotionEvent.ACTION_UP:
 									Log.e("picker", "ACTION_UP");
@@ -230,7 +230,7 @@ public class LightCtrl extends Activity{
 			public void run() {
 				// TODO Auto-generated method stub
 				/*
-				 * ¼ÓÔØÌ«¿ì »á»ñÈ¡²»µ½ colorµÄ¿í¸ß
+				 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ colorï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				 * */
 				hand.sendEmptyMessage(1);
 			}
@@ -248,7 +248,7 @@ public class LightCtrl extends Activity{
 		ImageView backBtn = (ImageView) findViewById(R.id.back);
 		ImageView okBtn = (ImageView) findViewById(R.id.ok);
 		TextView title = (TextView) findViewById(R.id.tv_title);
-		title.setText(R.string.moduleinfo);
+		title.setText(R.string.light_ctrl);
 		okBtn.setVisibility(View.INVISIBLE);
 		backBtn.setOnClickListener(new OnClickListener() {
 			

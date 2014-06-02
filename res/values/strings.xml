@@ -37,7 +37,6 @@
 	<string name="moduleinfo">设备信息</string>
 	<string name="usermodify_userphone">手机</string>
 	<string name="usermodify_softver">软件版本</string>
-	
 	<string name="userguide_1">新手指南</string>
 	<string name="userguide_2">常见问题</string>
 	<string name="userguide_3">二维码</string>
@@ -58,7 +57,7 @@
 	<string name="sys_ctrl">系统控制</string>
 	<string name="helper">帮助信息</string>
 	
-	
+	<string name="module_modify">设备修改</string>
 	
 	
 	<string name="module_modify_module_name">设备名称</string>

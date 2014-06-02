@@ -103,7 +103,7 @@ public class SystemCtrl extends Activity{
 		ImageView okBtn = (ImageView) findViewById(R.id.ok);
 		okBtn.setVisibility(View.INVISIBLE);
 		TextView title = (TextView) findViewById(R.id.tv_title);
-		title.setText(R.string.moduleinfo);
+		title.setText(R.string.sys_ctrl);
 
 		backBtn.setOnClickListener(new OnClickListener() {
 			

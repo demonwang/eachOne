@@ -78,7 +78,7 @@ public class ModuleModify extends Activity implements OnClickListener{
 		ImageView backBtn = (ImageView) findViewById(R.id.back);
 		ImageView okBtn = (ImageView) findViewById(R.id.ok);
 		TextView title = (TextView) findViewById(R.id.tv_title);
-		title.setText(R.string.setting_nav);
+		title.setText(R.string.module_modify);
 		okBtn.setOnClickListener(new OnClickListener() {
 			
 			@Override

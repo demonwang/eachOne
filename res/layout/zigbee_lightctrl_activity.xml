@@ -22,19 +22,27 @@
                 android:layout_weight="17"
                 android:scaleType="fitXY"
                 android:src="@drawable/light_ctrl_2" />
+            <!--
+                <com.hfapp.view.MyColorPickView 
+                    android:id="@+id/color"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="17"/>
+            -->
         </LinearLayout>
-<!-- 
+        <!--
         <com.hfapp.view.ZigbeeColorPicker
             android:id="@+id/zc"
             android:layout_width="40dp"
             android:layout_height="40dp" >
         </com.hfapp.view.ZigbeeColorPicker>
-     -->    
-        <TextView 
-                android:id="@+id/text"
-                android:layout_width="20dp" 
-                android:layout_marginLeft="100dp"
-                android:layout_height="20dp"/>
+        -->
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="100dp" />
     </RelativeLayout>
 
     <LinearLayout
