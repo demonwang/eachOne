@@ -287,49 +287,66 @@ public class ModuleManagerImpl implements IModuleManager {
 						continue;
 					}
 					//Log.e("recv", HexBin.bytesToStringWithSpace(l1bytes));
-					
+				
 					Head1 h1 = new Head1();
 					h1.unpack(l1bytes);
 					String mac = h1.getMacString();
-					
+					// 5.31 change
 					T1Message msg = new T1Message();
+					ModuleInfo mi = new ModuleInfo();
+					if(h1.getId() != T1Message.ID_LOCAL_DISCOVERY){
+						mi = LocalModuleInfoContainer.getInstance().get(mac);
+						if(mi == null){
+							continue;
+						}else{
+							msg.setKey(mi.getLocalKey().getBytes());
+							msg.unpack(l1bytes);
+						}
+					}
+					
+					//end
+					
 					// msg.setKey(AES.DEFAULT_KEY_128.getBytes());
 					// msg.unpack(l1bytes);
+//
+//					ModuleInfo mi = LocalModuleInfoContainer.getInstance().get(
+//							mac);
+//
+//					if (mi == null) {
+//						if (h1.isRegistered()) {
+//							continue;
+//						}
+//						mi = new ModuleInfo();
+//						msg.setKey(AES.DEFAULT_KEY_128.getBytes());
+//						msg.unpack(l1bytes);
+//					} else {
+//						msg.setKey(mi.getLocalKey().getBytes());
+//						msg.unpack(l1bytes);
+//					}
 
-					ModuleInfo mi = LocalModuleInfoContainer.getInstance().get(
-							mac);
-
-					if (mi == null) {
-						if (h1.isRegistered()) {
-							continue;
-						}
-						mi = new ModuleInfo();
-						msg.setKey(AES.DEFAULT_KEY_128.getBytes());
-						msg.unpack(l1bytes);
-					} else {
-						msg.setKey(mi.getLocalKey().getBytes());
-						msg.unpack(l1bytes);
-					}
-
-					if (msg.getHead1().getId() == T1Message.ID_LOCAL_DISCOVERY) {
-						if (!msg.getHead1().isRegistered()) {
-							// find a new dev
+					if (h1.getId() == T1Message.ID_LOCAL_DISCOVERY) {
+						if(h1.isRegistered()){
+							mi = LocalModuleInfoContainer.getInstance().get(mac);
+							if(mi == null){
+								continue;
+							}else{
+								msg.setKey(mi.getLocalKey().getBytes());
+								msg.unpack(l1bytes);
+							}
+						}else{
 							msg.setKey(AES.DEFAULT_KEY_128.getBytes());
 							msg.unpack(l1bytes);
 						}
-
 						mi.setMac(mac);
 						mi.setLocalIp(recvPacket.getAddress().getHostAddress());
 						mi.setLastTimestamp(new java.util.Date().getTime());
 						mi.setFactoryId(msg.getHead2().getComponyCode());
 						mi.setType(msg.getHead2().getModuleCode());
-
-						 //LocalModuleInfoContainer.getInstance().put(mac, mi);
-
-						if (!msg.getHead1().isRegistered()) {
-							// find a new dev
+						
+						if(!h1.isRegistered()){
 							ModuleManagerImpl.this.notifyOnNewDevEvent(mi);
-							continue;
+						}else{
+							LocalModuleInfoContainer.getInstance().put(mac, mi);
 						}
 					} else if (msg.getHead1().getId() == T1Message.ID_COMMON_EVENT) {
 						byte[] payload = msg.getPayload();
@@ -343,8 +360,7 @@ public class ModuleManagerImpl implements IModuleManager {
 						if (t2.getTag1() == T2.TAG1_EVENT) {
 							if (t2.getTag2() == 0x01) {
 								// GPIO event
-								HashMap<Integer, GPIO> gpioMap = getHelper()
-										.getStatulist(t2.getData());
+								HashMap<Integer, GPIO> gpioMap = getHelper().getStatulist(t2.getData());
 
 								ModuleManagerImpl.this.notifyGPIOEvent(mac,
 										gpioMap);

@@ -29,6 +29,7 @@ public class ZigbeeModuleInfoActivity extends Activity implements OnClickListene
 	private ImageView light_ctrl;
 	private ImageView sys_ctrl;
 	private ImageView help;
+	private TextView moduleName;
 	private ModuleInfo mi;
 	private String mac;
 	private boolean isonline;
@@ -88,6 +89,8 @@ public class ZigbeeModuleInfoActivity extends Activity implements OnClickListene
 		scene_ctrl = (ImageView) findViewById(R.id.scene_ctrl);
 		light_ctrl = (ImageView) findViewById(R.id.light_ctrl);
 		sys_ctrl = (ImageView) findViewById(R.id.sys_ctrl);
+		moduleName = (TextView) findViewById(R.id.moduleinfo_module_name);
+		moduleName.setText(mi.getName());
 		help = (ImageView) findViewById(R.id.helper);
 		icon.setOnClickListener(this);
 		scene_ctrl.setOnClickListener(this);
@@ -126,7 +129,13 @@ public class ZigbeeModuleInfoActivity extends Activity implements OnClickListene
 		}
 	}
 	
-	
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		mi = LocalModuleInfoContainer.getInstance().get(mac);
+		moduleName.setText(mi.getName());
+	}
 	private void changeAllNodeStat(){
 		new Thread(new Runnable() {
 			

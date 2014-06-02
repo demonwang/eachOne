@@ -12,6 +12,7 @@ import com.hf.module.IModuleManager;
 import com.hf.module.ManagerFactory;
 import com.hf.module.ModuleConfig;
 import com.hf.module.ModuleException;
+import com.hf.module.impl.LocalModuleInfoContainer;
 import com.hf.module.impl.adaptor.AndroidAdaptor;
 import com.hf.module.info.GPIO;
 import com.hf.module.info.ModuleInfo;
@@ -52,16 +53,19 @@ public class Smartlink extends Activity implements IEventListener{
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 0:
-				Toast.makeText(Smartlink.this, "ÍøÂçÁ´½ÓÊ§°Ü",Toast.LENGTH_SHORT).show();
+				Toast.makeText(Smartlink.this, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",Toast.LENGTH_SHORT).show();
+				break;
+			case 1:
+				finish();
 				break;
 			case 100:
-				Toast.makeText(Smartlink.this, "WIFIÎ´Á´½Ó", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Smartlink.this, "WIFIï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 				break;
 			case 101:
-				Toast.makeText(Smartlink.this, "Ã»ÓÐ·¢ÏÖ ¿ÉÌí¼ÓÉè±¸", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Smartlink.this, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 				break;
 			case -202:
-				Toast.makeText(Smartlink.this, "Éè±¸ÒÑ¾­±»Ìí¼Ó", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Smartlink.this, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 				break;
 			default:
 				break;
@@ -103,7 +107,7 @@ public class Smartlink extends Activity implements IEventListener{
 	}
 	
 	/**
-	 * Ìí¼ÓÒ»¾­·¢ÏÖµÄÉè±¸
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	
 	class addModuleThread implements Runnable {
@@ -123,21 +127,25 @@ public class Smartlink extends Activity implements IEventListener{
 			while(it.hasNext()){
 				ModuleInfo mi = it.next();
 				try {
-					if(mi.getId() == null){
+						mi.setId(null);
 						mi.setAccessKey(ModuleConfig.accessKey);
 						mi.setLocalKey(ModuleConfig.localModulePswd);
 						mi.setName(mi.getMac().substring(4));
-						mi = manager.setModule(mi);
-					}
+						try{
+							mi = manager.setModule(mi);
+						}catch(ModuleException e){
+							
+						}
+					LocalModuleInfoContainer.getInstance().put(mi.getMac(), mi);
 					manager.getHelper().setModulePSWD(mi.getMac());
 					manager.getHelper().setServAdd(mi.getMac(),ModuleConfig.cloudsericeIp ,ModuleConfig.cloudservicePort);
+					hand.sendEmptyMessage(1);
 				} catch (ModuleException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					hand.sendEmptyMessage(e.getErrorCode());
 				}
 			}
-			finish();
 		}
 	};
 	
@@ -174,7 +182,7 @@ public class Smartlink extends Activity implements IEventListener{
 		}
 	};
 	/**
-	 * ¿ªÊ¼smartLink
+	 * ï¿½ï¿½ï¿½ï¿½smartLink
 	 */
 	Runnable smartlinkThread = new Runnable() {
 		

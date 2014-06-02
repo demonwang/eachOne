@@ -44,6 +44,12 @@ public class ModuleModify extends Activity implements OnClickListener{
 			case 2:
 				Toast.makeText(ModuleModify.this, "delete err", Toast.LENGTH_SHORT).show();
 				break;
+			case 3:
+				finish();
+				break;
+			case 4:
+				Toast.makeText(ModuleModify.this, R.string.changinfo_err, Toast.LENGTH_SHORT).show();
+				break;
 			default:
 				break;
 			}

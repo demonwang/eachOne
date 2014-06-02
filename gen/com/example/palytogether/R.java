@@ -337,6 +337,9 @@ public final class R {
         public static final int brag2=0x7f070008;
         public static final int brag3=0x7f070009;
         public static final int brag4=0x7f07000a;
+        /**  err string  
+         */
+        public static final int changinfo_err=0x7f070041;
         public static final int hello_world=0x7f070002;
         public static final int helper=0x7f07002e;
         public static final int history=0x7f070027;

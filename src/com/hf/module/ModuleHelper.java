@@ -277,7 +277,7 @@ public class ModuleHelper {
 		try {
 			rsp = mm.moduleCommSet(t2Req);
 		} catch (ModuleException e) {
-			mx.setErrorCode(-33);// -33 锟斤拷锟界不通
+			mx.setErrorCode(-33);// -33 ���������������������
 			throw mx;
 		}
 		byte[] rspbyte = rsp.get(mac);
@@ -287,7 +287,7 @@ public class ModuleHelper {
 			throw mx;
 		}
 		if (rspbyte.length < 10) {
-			mx.setErrorCode(ModuleException.ERROR_CODE_RECV_CMD_DECODE_ERR); // -30 锟斤拷询锟斤拷锟斤拷息锟斤拷锟斤拷锟节★拷
+			mx.setErrorCode(ModuleException.ERROR_CODE_RECV_CMD_DECODE_ERR); // -30 ���������������������������������������������������������������
 			throw mx;
 		}
 
@@ -305,7 +305,7 @@ public class ModuleHelper {
 				t = t.unpackWeekSingleTime(timebyte);
 			}
 		} else {
-			mx.setErrorCode(-30); // -30 锟斤拷取模锟斤拷锟斤拷息锟斤拷锟斤拷
+			mx.setErrorCode(-30); // -30 ������������������������������������������������������
 			throw mx;
 		}
 		return t;
@@ -375,7 +375,7 @@ public class ModuleHelper {
 		Head2 h2 = new Head2();
 		h2.setVersion(0x1);
 		h2.setReserved(0);
-		h2.setComponyCode(mi.getFactoryId());
+		h2.setComponyCode(ModuleConfig.factoryId);
 		h2.setModuleCode(mi.getType());
 
 		send.setHead1(h1);
@@ -394,7 +394,7 @@ public class ModuleHelper {
 			mx.setErrorCode(-36); // cmd pack err
 			throw mx;
 		}
-		System.out.println(mac + "锟斤拷锟斤拷璞�---------->OK");
+		System.out.println(mac + "������������������������---------->OK");
 		return UdpProxy.getInstance().send(cmd, mi.getLocalIp(),
 				AES.DEFAULT_KEY_128.getBytes());
 
@@ -415,7 +415,7 @@ public class ModuleHelper {
 		h2.setVersion(1);
 		h2.setReserved(0);
 		h2.setSn(0);
-		h2.setComponyCode(mi.getFactoryId());
+		h2.setComponyCode(ModuleConfig.factoryId);
 		h2.setModuleCode(mi.getType());
 		send.setHead1(h1);
 		send.setHead2(h2);
@@ -451,7 +451,7 @@ public class ModuleHelper {
 			mx.setErrorCode(-36);
 			throw mx;
 		}
-		System.out.println(mac + "锟斤拷锟矫凤拷锟斤拷锟斤拷锟斤拷址----------->OK");
+		System.out.println(mac + "���������������������������������������������������----------->OK");
 		return UdpProxy.getInstance().send(cmd, mi.getLocalIp(),
 				mi.getLocalKey().getBytes());
 	}

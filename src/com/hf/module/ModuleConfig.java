@@ -87,4 +87,6 @@ public class ModuleConfig{
 	
 	
 	public static int defImageNum = 9;
+	
+	public static short factoryId = 0;
 }

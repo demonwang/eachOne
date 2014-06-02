@@ -86,4 +86,8 @@
 	</string>
 	
 	<string name="relogin">重新登入</string>
+	
+	<!-- err string  -->
+	
+	<string name="changinfo_err">修改失败</string>
 </resources>

@@ -97,7 +97,7 @@ public class ModuleListView extends FrameLayout {
 			if(list.get(i).getType() == 0x109) //0x0109 zigbee
 			{
 				view = new ZigbeeModuleView(getContext(), addToWhichSide);
-				view.moduleImage.setBackgroundResource(ImageContentor.getOpenImageRs(10));
+				view.moduleImage.setBackgroundResource(ImageContentor.getCloseImageRs(10));
 				ModuleKeyValue mkv = new ModuleKeyValue(i, 10);
 				KeyValueHelper.getInstence().put(list.get(i).getMac(), mkv);
 			}else {
