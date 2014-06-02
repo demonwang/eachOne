@@ -44,6 +44,7 @@ public class ImageContentor extends Activity{
 				// TODO Auto-generated method stub
 				setResult(imagIndex);
 				finish();
+				overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 			}
 		});
 		backBtn.setOnClickListener(new OnClickListener() {
@@ -53,6 +54,7 @@ public class ImageContentor extends Activity{
 				// TODO Auto-generated method stub
 				setResult(100);
 				finish();
+				overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 			}
 		});
 	}
@@ -138,5 +140,11 @@ public class ImageContentor extends Activity{
 		// TODO Auto-generated method stub
 		setResult(100);
 		finish();
+	}
+	
+	@Override
+	public void finish() {
+		// TODO Auto-generated method stub
+		super.finish();
 	}
 }

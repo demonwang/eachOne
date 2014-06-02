@@ -37,6 +37,7 @@ public class SmartCtrler extends Activity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				finish();
+				overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 			}
 		});
 	}

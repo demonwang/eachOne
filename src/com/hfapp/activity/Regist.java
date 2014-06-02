@@ -68,6 +68,7 @@ public class Regist extends Activity{
 				Userconfig.saveUserInfo();
 				Intent i = new Intent(Regist.this,MainActivity.class);
 				startActivity(i);
+				overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 				finish();
 				break;
 			case -114:

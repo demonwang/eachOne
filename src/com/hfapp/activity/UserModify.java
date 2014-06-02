@@ -121,7 +121,7 @@ public class UserModify extends Activity {
 		userNikeName.setText(ModuleConfig.cloudUserDisPlayName);
 		userPhone.setText(ModuleConfig.cloudUserPhone);
 		userEmail.setText(ModuleConfig.cloudUserEmail);
-		softWareVer.setText("v1.1.1.1.1");
+		softWareVer.setText(R.string.version);
 		userNikeName.addTextChangedListener(new TextWatcher() {
 
 			@Override

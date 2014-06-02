@@ -128,7 +128,7 @@ public class SystemCtrl extends Activity{
 						// TODO Auto-generated method stub
 						try {
 							hand.sendEmptyMessage(3);
-							zhelper.startAddNodes(1000);
+							zhelper.startAddNodes(60);
 							hand.sendEmptyMessage(2);
 						} catch (ModuleException e) {
 							// TODO Auto-generated catch block

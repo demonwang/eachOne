@@ -110,8 +110,8 @@ public class Setting extends Activity implements OnClickListener{
 		default:
 			break;
 		}
-		
 		startActivity(i);
+		overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left); 
 		finish();
 	}
 	

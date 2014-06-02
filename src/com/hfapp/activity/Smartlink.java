@@ -57,6 +57,7 @@ public class Smartlink extends Activity implements IEventListener{
 				break;
 			case 1:
 				finish();
+				overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 				break;
 			case 100:
 				Toast.makeText(Smartlink.this, "WIFI������", Toast.LENGTH_SHORT).show();
@@ -102,6 +103,7 @@ public class Smartlink extends Activity implements IEventListener{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				finish();
+				overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 			}
 		});
 	}
@@ -320,6 +322,7 @@ public class Smartlink extends Activity implements IEventListener{
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		finish();
+		overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 	}
 	
 	@Override

@@ -28,6 +28,7 @@ public class AddNavActivity extends Activity{
 				// TODO Auto-generated method stub
 				Intent i = new Intent(AddNavActivity.this,Smartlink.class);
 				startActivity(i);
+				overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 				finish();
 			}
 		});

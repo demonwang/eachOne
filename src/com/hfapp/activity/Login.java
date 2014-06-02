@@ -110,7 +110,9 @@ public class Login extends Activity implements OnClickListener{
 	private void doRegist(){
 		Intent i = new Intent(this, Regist.class);
 		startActivity(i);
+		overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 		finish();
+		
 	}
 	
 	private void doForgotPswd(){
@@ -120,6 +122,7 @@ public class Login extends Activity implements OnClickListener{
 	private void startModuleListActivity(){
 		Intent i = new Intent(this,ModuleList.class);
 		startActivity(i);
+		overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 		finish();
 	}
 }

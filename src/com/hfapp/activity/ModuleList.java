@@ -67,6 +67,7 @@ public class ModuleList extends Activity{
 				Intent i = new Intent(ModuleList.this, Setting.class);
 				i.putExtra(Setting.FROM, Setting.FROM_MODULE_LIST);
 				startActivity(i);
+				overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 				finish();
 			}
 		});
@@ -95,6 +96,7 @@ public class ModuleList extends Activity{
 				// TODO Auto-generated method stub
 				Intent i = new Intent(ModuleList.this,AddNavActivity.class);
 				startActivity(i);
+				overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 			}
 		});
 	}

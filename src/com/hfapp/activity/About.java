@@ -42,6 +42,7 @@ public class About extends Activity{
 				Intent i = new Intent(About.this, Setting.class);
 				i.putExtra(Setting.FROM, Setting.FROM_ABOUT);
 				startActivity(i);
+				overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 				finish();
 			}
 		});

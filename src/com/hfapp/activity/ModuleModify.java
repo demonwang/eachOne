@@ -40,12 +40,14 @@ public class ModuleModify extends Activity implements OnClickListener{
 			case 1:
 				Intent i = new Intent(ModuleModify.this, ModuleList.class);
 				startActivity(i);
+				overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 				break;
 			case 2:
 				Toast.makeText(ModuleModify.this, "delete err", Toast.LENGTH_SHORT).show();
 				break;
 			case 3:
 				finish();
+				overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 				break;
 			case 4:
 				Toast.makeText(ModuleModify.this, R.string.changinfo_err, Toast.LENGTH_SHORT).show();
@@ -106,6 +108,7 @@ public class ModuleModify extends Activity implements OnClickListener{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				finish();
+				overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 			}
 		});
 	}
@@ -126,6 +129,7 @@ public class ModuleModify extends Activity implements OnClickListener{
 		case R.id.module_image:
 			Intent i = new Intent(this, ImageContentor.class);
 			startActivityForResult(i, 100);
+			overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 			break;
 		case R.id.module_delete:
 			doDeleteModule();
