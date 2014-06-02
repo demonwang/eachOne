@@ -96,7 +96,6 @@ public class LightModuleInfo extends Activity implements OnClickListener,IEventL
 				// TODO Auto-generated method stub
 				finish();
 				overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
-				
 			}
 		});
 	}
@@ -128,22 +127,18 @@ public class LightModuleInfo extends Activity implements OnClickListener,IEventL
 		case R.id.module_editer:
 			i.setClass(this, ModuleModify.class);
 			startActivity(i);
-			overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 			break;
 		case R.id.timer_manger:
 			i.setClass(this, TimerCenter.class);
 			startActivity(i);
-			overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 			break;
 		case R.id.smart_ctrl:
 			i.setClass(this, SmartCtrler.class);
 			startActivity(i);
-			overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 			break;
 		case R.id.history:
 			i.setClass(this, LogList.class);
 			startActivity(i);
-			overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 			break;
 		case R.id.moduleinfo_module_imag:
 			onPressImage();
@@ -248,5 +243,19 @@ public class LightModuleInfo extends Activity implements OnClickListener,IEventL
 	public void onUARTEvent(String mac, byte[] userData, boolean chanle) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public void finish() {
+		// TODO Auto-generated method stub
+		super.finish();
+		manager.unregisterEventListener(this);
+	}
+	
+	@Override
+	public void startActivity(Intent intent) {
+		// TODO Auto-generated method stub
+		super.startActivity(intent);
+		overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 	}
 }

@@ -119,7 +119,7 @@ public class TimerAdder extends Activity implements OnCheckedChangeListener {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-
+				
 			}
 		});
 		backBtn.setOnClickListener(new OnClickListener() {
@@ -128,6 +128,7 @@ public class TimerAdder extends Activity implements OnCheckedChangeListener {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				finish();
+				overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 			}
 		});
 	}

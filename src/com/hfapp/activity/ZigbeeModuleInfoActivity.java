@@ -80,6 +80,7 @@ public class ZigbeeModuleInfoActivity extends Activity implements OnClickListene
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				finish();
+				overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 			}
 		});
 	}
@@ -115,14 +116,17 @@ public class ZigbeeModuleInfoActivity extends Activity implements OnClickListene
 		case R.id.light_ctrl:
 			i.setClass(this, LightCtrl.class);
 			startActivity(i);
+			overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 			break;
 		case R.id.sys_ctrl:
 			i.setClass(this, SystemCtrl.class);
 			startActivity(i);
+			overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 			break;
 		case R.id.helper:
 			i.setClass(this, ModuleModify.class);
 			startActivity(i);
+			overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 			break;
 		default:
 			break;

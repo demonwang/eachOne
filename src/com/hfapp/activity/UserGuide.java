@@ -51,6 +51,7 @@ public class UserGuide extends Activity{
 				Intent i = new Intent(UserGuide.this, Setting.class);
 				i.putExtra(Setting.FROM, Setting.FROM_USER_NAV);
 				startActivity(i);
+				overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 				finish();
 			}
 		});
@@ -66,6 +67,7 @@ public class UserGuide extends Activity{
 				// TODO Auto-generated method stub
 				Intent i = new Intent(UserGuide.this,NavViews.class);
 				startActivity(i);
+				overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 				finish();
 			}
 		});

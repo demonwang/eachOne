@@ -292,8 +292,7 @@ public class Smartlink extends Activity implements IEventListener{
 			ModuleInfo tmp = it.next();
 			if(tmp.getMac().equalsIgnoreCase(mi.getMac())){
 				return ;
-			}
-					
+			}		
 		}
 		modulelist.add(mi);
 		

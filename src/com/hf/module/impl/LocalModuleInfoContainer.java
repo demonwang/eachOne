@@ -134,6 +134,9 @@ public class LocalModuleInfoContainer extends HashMap<String, ModuleInfo>{
 	}
 	public void removeAll(){
 		this.clear();
+		editer = sp.edit();
+		editer.putString("KEY", "{}");
+		editer.commit();
 //		Iterator<ModuleInfo> iter = this.values().iterator();
 //		while (iter.hasNext()) {
 //	       this.remove(iter.next());

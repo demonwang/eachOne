@@ -57,6 +57,7 @@ public class UserModify extends Activity {
 				Intent i = new Intent(UserModify.this, Setting.class);
 				i.putExtra(Setting.FROM, Setting.FROM_USER_INFO);
 				startActivity(i);
+				overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 				finish();
 				break;
 			case -105:
@@ -106,6 +107,7 @@ public class UserModify extends Activity {
 				Intent i = new Intent(UserModify.this, Setting.class);
 				i.putExtra(Setting.FROM, Setting.FROM_USER_INFO);
 				startActivity(i);
+				overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 				finish();
 			}
 		});

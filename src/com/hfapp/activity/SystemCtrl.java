@@ -84,6 +84,9 @@ public class SystemCtrl extends Activity{
 		jionDialog.setCanceledOnTouchOutside(false);
 		jionDialog.setTitle("Waiting.....");
 		znodes = ZigbeeConfig.znodes.get(mac);
+		if(znodes == null){
+			znodes = new ArrayList<ZigbeeNodeInfo>();
+		}
 	}
 	
 	private void initActionbar() {
@@ -95,6 +98,7 @@ public class SystemCtrl extends Activity{
 		bar.setDisplayShowTitleEnabled(false);
 		ImageView backBtn = (ImageView) findViewById(R.id.back);
 		ImageView okBtn = (ImageView) findViewById(R.id.ok);
+		okBtn.setVisibility(View.INVISIBLE);
 		TextView title = (TextView) findViewById(R.id.tv_title);
 		title.setText(R.string.moduleinfo);
 
@@ -104,6 +108,7 @@ public class SystemCtrl extends Activity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				finish();
+				overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 			}
 		});
 	}
