@@ -41,7 +41,7 @@ import android.widget.Toast;
 public class Smartlink extends Activity implements IEventListener{
 	
 	private Animation animi;
-	
+
 	private EditText ssid;
 	private EditText pswd;
 	private ImageButton start;
@@ -340,5 +340,4 @@ public class Smartlink extends Activity implements IEventListener{
 		}
 		super.finish();
 	}
-	
 }
