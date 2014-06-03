@@ -19,7 +19,7 @@ public class ModuleConfig{
 	/**
 	 * 
 	 */
-	public static String accessKey = "402880e942d23e030142d23e10a10000";
+	public static String accessKey = "8a21049f466068f90146607eaaa1022a";
 	
 	/**
 	 * 

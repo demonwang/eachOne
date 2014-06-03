@@ -115,7 +115,8 @@ public class ModuleList extends Activity{
 		}else{
 			secondPressTime = System.currentTimeMillis();
 			if(secondPressTime-fristPressTime<1000){
-				System.exit(0);
+				//System.exit(0);
+				finish();
 			}
 			isDoublepress = false;
 		}

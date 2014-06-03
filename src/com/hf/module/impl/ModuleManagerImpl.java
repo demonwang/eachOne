@@ -910,6 +910,14 @@ public class ModuleManagerImpl implements IModuleManager {
 					"Can not access cloud service!");
 		}
 		ModuleInfo mi = LocalModuleInfoContainer.getInstance().get(mac);
+		//*******
+		if(mi == null){
+			throw new ModuleException("");
+		}
+		if(mi.getId() == null){
+			throw new ModuleException("");
+		}
+		//***
 		String reqTemplate = "{'PL':{'moduleId':'#moduleId#'},'CID':30021,'SID':'#SID#'}";
 		String req = reqTemplate.replaceFirst("#moduleId#", mi.getId())
 				.replaceFirst("#SID#", this.SID);

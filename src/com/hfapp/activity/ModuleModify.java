@@ -40,6 +40,7 @@ public class ModuleModify extends Activity implements OnClickListener{
 			case 1:
 				Intent i = new Intent(ModuleModify.this, ModuleList.class);
 				startActivity(i);
+				finish();
 				overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
 				break;
 			case 2:
@@ -168,5 +169,13 @@ public class ModuleModify extends Activity implements OnClickListener{
 			KeyValueHelper.getInstence().get(mi.getMac()).setIndex(resultCode);
 			KeyValueHelper.getInstence().save();
 		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		finish();
+		overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 	}
 }

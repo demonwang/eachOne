@@ -89,7 +89,7 @@ public class MainActivity extends Activity {
 	
 	private void InitConfig(){
 		ModuleConfig.appcontext = getApplicationContext();
-		ModuleConfig.accessKey="8a21049f463ceb7d01463d2fa87e0001";
+		ModuleConfig.accessKey="8a21049f466068f90146607eaaa1022a";
 		ModuleConfig.cloudServiceUrl = "https://115.29.164.59/usvc/";
 		ModuleConfig.broadcastPort = 38899;
 		ModuleConfig.pulseInterval = 3000;

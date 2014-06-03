@@ -46,7 +46,7 @@ public class Smartlink extends Activity implements IEventListener{
 	private EditText pswd;
 	private ImageButton start;
 	private IModuleManager manager;
-	private ArrayList<ModuleInfo> modulelist = new ArrayList<ModuleInfo>();
+//	private ArrayList<ModuleInfo> modulelist = new ArrayList<ModuleInfo>();
 	private Timer time;
 	private boolean isconnect = false;
 	private Handler hand = new Handler(){
@@ -121,71 +121,97 @@ public class Smartlink extends Activity implements IEventListener{
 		public void run() {
 			// TODO Auto-generated method stub
 			manager.unregisterEventListener(Smartlink.this);
-			if(modulelist.size()<=0){
-				hand.sendEmptyMessage(101);
-				return;
+//			if(modulelist.size()<=0){
+//				hand.sendEmptyMessage(101);
+//				return;
+//			}
+			
+			if(mi == null){
+				return ;
 			}
-			Iterator<ModuleInfo> it = modulelist.iterator();
-			while(it.hasNext()){
-				ModuleInfo mi = it.next();
-				try {
-						mi.setId(null);
-						mi.setAccessKey(ModuleConfig.accessKey);
-						mi.setLocalKey(ModuleConfig.localModulePswd);
-						mi.setName(mi.getMac().substring(4));
-						
-						try{
-							mi = manager.setModule(mi);
-							mi.setFactoryId((int) ModuleConfig.factoryId);
-						}catch(ModuleException e){
-							
-						}
-					
-					manager.getHelper().setModulePSWD(mi);
-					manager.getHelper().setServAdd(mi,ModuleConfig.cloudsericeIp ,ModuleConfig.cloudservicePort);
-					LocalModuleInfoContainer.getInstance().put(mi.getMac(), mi);
-					hand.sendEmptyMessage(1);
-				} catch (ModuleException e) {
-					// TODO Auto-generated catch block
+//			Iterator<ModuleInfo> it = modulelist.iterator();
+//			while(it.hasNext()){
+//				ModuleInfo mi = it.next();
+//				try {
+//						mi.setId(null);
+//						mi.setAccessKey(ModuleConfig.accessKey);
+//						mi.setLocalKey(ModuleConfig.localModulePswd);
+//						mi.setName(mi.getMac().substring(4));
+//						
+//						try{
+//							mi = manager.setModule(mi);
+//							mi.setFactoryId((int) ModuleConfig.factoryId);
+//						}catch(ModuleException e){
+//							
+//						}
+//					
+//					manager.getHelper().setModulePSWD(mi);
+//					manager.getHelper().setServAdd(mi,ModuleConfig.cloudsericeIp ,ModuleConfig.cloudservicePort);
+//					LocalModuleInfoContainer.getInstance().put(mi.getMac(), mi);
+//					hand.sendEmptyMessage(1);
+//				} catch (ModuleException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//					hand.sendEmptyMessage(e.getErrorCode());
+//				}
+//			}
+			try {
+				mi.setId(null);
+				mi.setAccessKey(ModuleConfig.accessKey);
+				mi.setLocalKey(ModuleConfig.localModulePswd);
+				mi.setName(mi.getMac().substring(4));
+				
+				try{
+					mi = manager.setModule(mi);
+					mi.setFactoryId((int) ModuleConfig.factoryId);
+				}catch(ModuleException e){
 					e.printStackTrace();
-					hand.sendEmptyMessage(e.getErrorCode());
 				}
-			}
+			
+			manager.getHelper().setModulePSWD(mi);
+			manager.getHelper().setServAdd(mi,ModuleConfig.cloudsericeIp ,ModuleConfig.cloudservicePort);
+			LocalModuleInfoContainer.getInstance().put(mi.getMac(), mi);
+			hand.sendEmptyMessage(1);
+		} catch (ModuleException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			hand.sendEmptyMessage(e.getErrorCode());
+		}
 		}
 	};
 	
-	TimerTask TimeaddModuleThread = new TimerTask() {
-	
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			manager.unregisterEventListener(Smartlink.this);
-			if(modulelist.size()<=0){
-				hand.sendEmptyMessage(101);
-				return;
-			}
-			Iterator<ModuleInfo> it = modulelist.iterator();
-			while(it.hasNext()){
-				ModuleInfo mi = it.next();
-				try {
-					if(mi.getId() == null){
-						mi.setAccessKey(ModuleConfig.accessKey);
-						mi.setLocalKey(ModuleConfig.localModulePswd);
-						mi.setName(mi.getMac().substring(4));
-						mi = manager.setModule(mi);
-					}
-					manager.getHelper().setModulePSWD(mi.getMac());
-					try{Thread.sleep(500);}catch(Exception e){}
-					manager.getHelper().setServAdd(mi.getMac(),ModuleConfig.cloudsericeIp ,ModuleConfig.cloudservicePort);
-				} catch (ModuleException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					hand.sendEmptyMessage(e.getErrorCode());
-				}
-			}
-			finish();
-		}
-	};
+//	TimerTask TimeaddModuleThread = new TimerTask() {
+//	
+//		@Override
+//		public void run() {
+//			// TODO Auto-generated method stub
+//			manager.unregisterEventListener(Smartlink.this);
+//			if(modulelist.size()<=0){
+//				hand.sendEmptyMessage(101);
+//				return;
+//			}
+//			Iterator<ModuleInfo> it = modulelist.iterator();
+//			while(it.hasNext()){
+//				ModuleInfo mi = it.next();
+//				try {
+//					if(mi.getId() == null){
+//						mi.setAccessKey(ModuleConfig.accessKey);
+//						mi.setLocalKey(ModuleConfig.localModulePswd);
+//						mi.setName(mi.getMac().substring(4));
+//						mi = manager.setModule(mi);
+//					}
+//					manager.getHelper().setModulePSWD(mi.getMac());
+//					try{Thread.sleep(500);}catch(Exception e){}
+//					manager.getHelper().setServAdd(mi.getMac(),ModuleConfig.cloudsericeIp ,ModuleConfig.cloudservicePort);
+//				} catch (ModuleException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//					hand.sendEmptyMessage(e.getErrorCode());
+//				}
+//			}
+//			finish();
+//		}
+//	};
 	/**
 	 * ����smartLink
 	 */
@@ -199,7 +225,7 @@ public class Smartlink extends Activity implements IEventListener{
 			saveRouterInfo(strSSID, strPSWD);
 			
 			manager.connectModuleToWIFI(strSSID, strPSWD);
-			time.schedule(TimeaddModuleThread, 15000);
+//			time.schedule(TimeaddModuleThread, 15000);
 //			hand.postDelayed(addModuleThread, 15000);
 		}
 	};
@@ -290,14 +316,14 @@ public class Smartlink extends Activity implements IEventListener{
 	public void onNewDevFind(ModuleInfo mi) {
 		// TODO Auto-generated method stub
 		System.out.println(getClass().getCanonicalName()+":"+mi.getMac());
-		Iterator<ModuleInfo> it = modulelist.iterator();
-		while(it.hasNext()){
-			ModuleInfo tmp = it.next();
-			if(tmp.getMac().equalsIgnoreCase(mi.getMac())){
-				return ;
-			}		
-		}
-		modulelist.add(mi);
+//		Iterator<ModuleInfo> it = modulelist.iterator();
+//		while(it.hasNext()){
+//			ModuleInfo tmp = it.next();
+//			if(tmp.getMac().equalsIgnoreCase(mi.getMac())){
+//				return ;
+//			}		
+//		}
+//		modulelist.add(mi);
 		
 		new Thread(new addModuleThread(mi)).start();
 	}
