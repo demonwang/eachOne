@@ -131,7 +131,7 @@ public class SystemCtrl extends Activity{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				cp.show();
+				//cp.show();
 			}
 		});
 		z_add.setOnClickListener(new OnClickListener() {

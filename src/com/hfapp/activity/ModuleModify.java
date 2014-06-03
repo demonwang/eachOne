@@ -147,12 +147,14 @@ public class ModuleModify extends Activity implements OnClickListener{
 			public void run() {
 				// TODO Auto-generated method stub
 				try {
+					
 					manager.deleteModule(mi.getMac());
 					hand.sendEmptyMessage(1);
 				} catch (ModuleException e) {
 					// TODO Auto-generated catch block
-					hand.sendEmptyMessage(2);
+					hand.sendEmptyMessage(1);
 					e.printStackTrace();
+					LocalModuleInfoContainer.getInstance().remove(mi.getMac());
 				}
 			}
 		}).start();
