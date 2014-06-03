@@ -30,27 +30,27 @@ public class Login extends Activity implements OnClickListener{
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 0:
-				Toast.makeText(Login.this, "������������", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Login.this, "login err", Toast.LENGTH_SHORT).show();
 				break;
 			case 5: //��������������
-				Toast.makeText(Login.this, "��������������", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(Login.this, "", Toast.LENGTH_SHORT).show();
 				break;
 			case 2: //��������
-				Toast.makeText(Login.this, "��������", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(Login.this, "��������", Toast.LENGTH_SHORT).show();
 				break;
 			case 3: //��������
 				startModuleListActivity();
-				Toast.makeText(Login.this, "��������", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Login.this, "login ok", Toast.LENGTH_SHORT).show();
 				break;
 			case 4: //��������
 //				startModuleListActivity();
-				Toast.makeText(Login.this, "����������", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(Login.this, "����������", Toast.LENGTH_SHORT).show();
 				break;
 			case -103:
-				Toast.makeText(Login.this, "������������", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(Login.this, "������������", Toast.LENGTH_SHORT).show();
 				break;
 			case -101:
-				Toast.makeText(Login.this, "��������", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(Login.this, "��������", Toast.LENGTH_SHORT).show();
 				break;
 			default:
 				break;

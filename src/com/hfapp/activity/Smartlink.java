@@ -53,17 +53,17 @@ public class Smartlink extends Activity implements IEventListener{
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 0:
-				Toast.makeText(Smartlink.this, "������������",Toast.LENGTH_SHORT).show();
+				Toast.makeText(Smartlink.this, "network err",Toast.LENGTH_SHORT).show();
 				break;
 			case 1:
 				finish();
 				overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
 				break;
 			case 100:
-				Toast.makeText(Smartlink.this, "WIFI������", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Smartlink.this, "WIFI unconnect", Toast.LENGTH_SHORT).show();
 				break;
 			case 101:
-				Toast.makeText(Smartlink.this, "�������� ����������", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Smartlink.this, "smartlink timeout", Toast.LENGTH_SHORT).show();
 				break;
 			case -202:
 				Toast.makeText(Smartlink.this, "��������������", Toast.LENGTH_SHORT).show();

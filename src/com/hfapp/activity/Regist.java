@@ -56,13 +56,13 @@ public class Regist extends Activity{
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 0:
-				Toast.makeText(Regist.this, "网络错误", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Regist.this, "network err", Toast.LENGTH_SHORT).show();
 				break;
 			case 1:
-				Toast.makeText(Regist.this, "输入有误", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Regist.this, "input err", Toast.LENGTH_SHORT).show();
 				break;
 			case 2:
-				Toast.makeText(Regist.this, "注册成功", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Regist.this, "regist ok", Toast.LENGTH_SHORT).show();
 				ModuleConfig.cloudPassword = struserpswd;
 				ModuleConfig.cloudUserName = strusername;
 				Userconfig.saveUserInfo();
@@ -72,10 +72,10 @@ public class Regist extends Activity{
 				finish();
 				break;
 			case -114:
-				Toast.makeText(Regist.this, "验证码超时", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Regist.this, "capcha timeout", Toast.LENGTH_SHORT).show();
 				break;
 			case -104:
-				Toast.makeText(Regist.this, "用户已经存在", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Regist.this, "usrname is used", Toast.LENGTH_SHORT).show();
 				break;
 			default:
 				break;

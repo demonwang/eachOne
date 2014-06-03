@@ -32,7 +32,7 @@ public class ZigbeeModuleView extends BaseModuleView{
 				setImage();
 				break;
 			case 2:
-				Toast.makeText(getContext(), "Ctrl err", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getContext(), "ctrl err", Toast.LENGTH_SHORT).show();
 				break;
 			default:
 				break;
@@ -80,7 +80,7 @@ public class ZigbeeModuleView extends BaseModuleView{
 				} catch (ModuleException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					hand.sendEmptyMessage(2);
+					//hand.sendEmptyMessage(2);
 					isonline = false;
 				}
 				

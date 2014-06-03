@@ -35,15 +35,15 @@ public class Setting extends Activity implements OnClickListener{
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 0:
-				Toast.makeText(Setting.this, "网络错误", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Setting.this, "network err", Toast.LENGTH_SHORT).show();
 				break;
 			case 1:
-				Toast.makeText(Setting.this, "登出成功", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Setting.this, "logout ok", Toast.LENGTH_SHORT).show();
 				break;
 			case 2:
 				break;
 			default:
-				Toast.makeText(Setting.this, "登出错误", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Setting.this, "logout err", Toast.LENGTH_SHORT).show();
 				break;
 			}
 		};
@@ -170,7 +170,7 @@ public class Setting extends Activity implements OnClickListener{
 		// TODO Auto-generated method stub
 		if(!isDoublepress){
 			fristPressTime = System.currentTimeMillis();
-			Toast.makeText(this, "在按一次退出", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
 			isDoublepress = true;
 		}else{
 			secondPressTime = System.currentTimeMillis();
