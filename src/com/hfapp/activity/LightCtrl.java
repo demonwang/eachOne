@@ -94,7 +94,7 @@ public class LightCtrl extends Activity{
 						
 						Log.e("location", HexBin.bytesToStringWithSpace(znodes.get(i).getDeviceStates()));
 						Location l = getColorLocation((znodes.get(i).getcolorX()&0x00ffff),(znodes.get(i).getcolorY()&0xffff));
-						 RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(80,80);
+						 RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(60,60);
 						 lp1.leftMargin = l.x;
 						 lp1.topMargin = l.y;
 						 text.setBackgroundColor(getColor(l.x,l.y));
@@ -149,7 +149,7 @@ public class LightCtrl extends Activity{
 										left = 0;
 										right = left+v.getWidth();
 									}
-									if(top <color.getTop()){
+									if(top < color.getTop()){
 										top = 0;
 										bottom = top + v.getHeight();
 									}
@@ -170,6 +170,7 @@ public class LightCtrl extends Activity{
 									
 									int x = picker_centreX - color.getLeft();
 									int y = picker_centreY - color.getTop();
+									y = y+20; // У׼
 									thiscolor = getColor(x, y);
 									((ZigbeeColorPicker)v).setColor(thiscolor);
 									v.layout(left, top, right, bottom);
