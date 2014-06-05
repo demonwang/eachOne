@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -120,7 +121,7 @@ public class Smartlink extends Activity implements IEventListener{
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			manager.unregisterEventListener(Smartlink.this);
+			
 //			if(modulelist.size()<=0){
 //				hand.sendEmptyMessage(101);
 //				return;
@@ -155,27 +156,39 @@ public class Smartlink extends Activity implements IEventListener{
 //					hand.sendEmptyMessage(e.getErrorCode());
 //				}
 //			}
+			
 			try {
 				mi.setId(null);
+				Log.e("SMartlink", "mi.setId(null);");
 				mi.setAccessKey(ModuleConfig.accessKey);
+				Log.e("SMartlink", "setAccessKey");
 				mi.setLocalKey(ModuleConfig.localModulePswd);
+				Log.e("SMartlink", "setLocalKey");
 				mi.setName(mi.getMac().substring(4));
 				
+				Log.e("SMartlink", "setName");
 				try{
 					mi = manager.setModule(mi);
+					Log.e("SMartlink", "setModule");
 					mi.setFactoryId((int) ModuleConfig.factoryId);
-				}catch(ModuleException e){
+					Log.e("SMartlink", "setFactoryId");
+				}catch(Exception e){
 					e.printStackTrace();
+					Log.e("SMartlink", "set module end");
 				}
 			
 			manager.getHelper().setModulePSWD(mi);
+			Log.e("SMartlink", "setModulePSWD");
 			manager.getHelper().setServAdd(mi,ModuleConfig.cloudsericeIp ,ModuleConfig.cloudservicePort);
+			Log.e("SMartlink", "setServAdd");
 			LocalModuleInfoContainer.getInstance().put(mi.getMac(), mi);
+			Log.e("SMartlink", "LocalModuleInfoContainer");
 			hand.sendEmptyMessage(1);
 		} catch (ModuleException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			hand.sendEmptyMessage(e.getErrorCode());
+			Log.e("SMartlink", "end");
 		}
 		}
 	};

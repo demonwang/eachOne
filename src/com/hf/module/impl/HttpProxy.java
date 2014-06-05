@@ -192,8 +192,8 @@ public class HttpProxy {
 	
 	public synchronized String reqByHttpPost(String req) throws Exception {
 		String rsp = "";
-		System.out.println(req);
-		URL postUrl = new URL("http://115.29.164.59/usvc/");
+		System.out.println(ModuleConfig.cloudServiceUrl);
+		URL postUrl = new URL(ModuleConfig.cloudServiceUrl);
 		HttpURLConnection connection = (HttpURLConnection) postUrl
 				.openConnection();
 

@@ -29,7 +29,7 @@ public class ModuleConfig{
 	/**
 	 * 
 	 */
-	public static String cloudServiceUrl       = "https://115.29.164.59/usvc/";
+	public static String cloudServiceUrl       = "http://115.29.164.59/usvc/";
 	
 	public static String cloudsericeIp = "115.29.164.59";
 	public static int cloudservicePort = 47172;
@@ -89,4 +89,6 @@ public class ModuleConfig{
 	public static int defImageNum = 9;
 	
 	public static short factoryId = 0;
+	
+	public static boolean DEBUG = false;
 }

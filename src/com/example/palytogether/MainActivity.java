@@ -8,6 +8,7 @@ import com.example.config.Userconfig;
 import com.hf.module.ModuleConfig;
 import com.hf.module.ModuleException;
 import com.hf.module.impl.adaptor.AndroidAdaptor;
+import com.hfapp.activity.ConfigSetting;
 import com.hfapp.activity.Login;
 import com.hfapp.activity.ModuleList;
 import com.hfapp.work.InitThread;
@@ -60,12 +61,12 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		InitConfig();
+		setModuleConfig();
 		if(Userconfig.isFristLogin()){
 			/*
 			 * 如果是第一次登陆 就去引导界面
 			 *  */
-			Intent i = new Intent(this, NavViews.class);
+			Intent i = new Intent(this, Login.class);
 			startActivity(i);
 			finish();
 		}else{
@@ -90,7 +91,7 @@ public class MainActivity extends Activity {
 	private void InitConfig(){
 		ModuleConfig.appcontext = getApplicationContext();
 		ModuleConfig.accessKey="8a21049f466068f90146607eaaa1022a";
-		ModuleConfig.cloudServiceUrl = "https://115.29.164.59/usvc/";
+		ModuleConfig.cloudServiceUrl = "http://115.29.164.59/usvc/";
 		ModuleConfig.broadcastPort = 38899;
 		ModuleConfig.pulseInterval = 3000;
 		try {
@@ -122,5 +123,26 @@ public class MainActivity extends Activity {
 			}
 		}
 		return false;
+	}
+	
+	private void setModuleConfig() {
+		// TODO Auto-generated method stub
+		if(ModuleConfig.DEBUG){
+			SharedPreferences sp = getSharedPreferences(ConfigSetting.CONFIG, MODE_PRIVATE);
+			ModuleConfig.cloudsericeIp = sp.getString(ConfigSetting.CONFIG_SERVIP, ModuleConfig.cloudsericeIp);
+			ModuleConfig.appcontext = getApplicationContext();
+			ModuleConfig.accessKey=	sp.getString(ConfigSetting.CONFIG_ACCESSKEY, ModuleConfig.accessKey);
+			ModuleConfig.cloudServiceUrl = sp.getString(ConfigSetting.CONFIG_SERVURL, ModuleConfig.cloudServiceUrl);
+			ModuleConfig.broadcastPort = sp.getInt(ConfigSetting.CONFIG_LOCALPORT, ModuleConfig.broadcastPort);
+			ModuleConfig.pulseInterval = 3000;
+			try {
+				ModuleConfig.broadcastIp = new AndroidAdaptor().getBroadCast();
+			} catch (ModuleException e) {
+				// TODO Auto-generated catch block
+				ModuleConfig.broadcastIp = "255.255.255.255";
+			}
+		}else{
+			InitConfig();
+		}
 	}
 }

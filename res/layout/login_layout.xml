@@ -82,6 +82,13 @@
                     android:src="@drawable/login_btn_regist"
                     android:scaleType="centerInside"/>
             </LinearLayout>
+            
+            <TextView 
+                android:id="@+id/configconfig"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="hiflying"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

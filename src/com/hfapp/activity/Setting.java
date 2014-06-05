@@ -5,6 +5,7 @@ import com.hf.module.IModuleManager;
 import com.hf.module.ManagerFactory;
 import com.hf.module.ModuleConfig;
 import com.hf.module.ModuleException;
+import com.hf.module.impl.LocalModuleInfoContainer;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -38,6 +39,7 @@ public class Setting extends Activity implements OnClickListener{
 				Toast.makeText(Setting.this, "network err", Toast.LENGTH_SHORT).show();
 				break;
 			case 1:
+				
 				Toast.makeText(Setting.this, "logout ok", Toast.LENGTH_SHORT).show();
 				break;
 			case 2:
@@ -129,6 +131,7 @@ public class Setting extends Activity implements OnClickListener{
 				try {
 					manager.logout();
 					manager.stopbeat();
+					LocalModuleInfoContainer.getInstance().removeAll();
 					hand.sendEmptyMessage(1);
 				} catch (ModuleException e) {
 					// TODO Auto-generated catch block

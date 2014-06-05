@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Login extends Activity implements OnClickListener{
@@ -25,7 +26,7 @@ public class Login extends Activity implements OnClickListener{
 	private ImageButton forgotPswd;
 	private ImageButton regist;
 	private Button loginBtn;
-	
+	private TextView config;
 	private Handler hand = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -71,9 +72,19 @@ public class Login extends Activity implements OnClickListener{
 		forgotPswd = (ImageButton) findViewById(R.id.forget_pswd);
 		regist = (ImageButton) findViewById(R.id.regist);
 		loginBtn = (Button) findViewById(R.id.login_btn);
+		config = (TextView) findViewById(R.id.configconfig);
 		forgotPswd.setOnClickListener(this);
 		regist.setOnClickListener(this);
 		loginBtn.setOnClickListener(this);
+		config.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(Login.this,ConfigSetting.class);
+				startActivity(i);
+			}
+		});
 	}
 
 	@Override
