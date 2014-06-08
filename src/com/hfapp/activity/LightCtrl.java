@@ -20,6 +20,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.transition.ChangeBounds;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -47,7 +48,11 @@ public class LightCtrl extends Activity{
 	private final  double BPRA22 = 6.784552;
 	
 	
-	
+	long levelstartTime;
+	long levelnowTime;
+	long startTime = 0;
+	long nowTime = 0;
+	long perTime = 200;
 	
 	private String mac;
 	private ModuleInfo mi;
@@ -66,6 +71,9 @@ public class LightCtrl extends Activity{
 	private int range_width;
 	private int range_hight;
 	private int picker_w,picker_h;
+	
+	
+	private boolean colorisSending = false;
 	
 	private int leveldefPro = 0;
 	
@@ -94,7 +102,7 @@ public class LightCtrl extends Activity{
 						
 						Log.e("location", HexBin.bytesToStringWithSpace(znodes.get(i).getDeviceStates()));
 						Location l = getColorLocation((znodes.get(i).getcolorX()&0x00ffff),(znodes.get(i).getcolorY()&0xffff));
-						 RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(60,60);
+						 RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(80,80);
 						 lp1.leftMargin = l.x;
 						 lp1.topMargin = l.y;
 						 text.setBackgroundColor(getColor(l.x,l.y));
@@ -111,6 +119,9 @@ public class LightCtrl extends Activity{
 							
 							@Override
 							public boolean onTouch(View v, MotionEvent event) {
+								
+
+								
 								int ea=event.getAction(); 
 								int left,right,top,bottom;
 								if(range_width==0){//��������
@@ -123,7 +134,12 @@ public class LightCtrl extends Activity{
 								}
 								switch(ea){
 								case MotionEvent.ACTION_DOWN://����
-									Log.e("picker", "ACTION_DOWN1");
+								//	Log.e("picker", "ACTION_DOWN1");
+									
+									startTime = System.currentTimeMillis();
+									nowTime = System.currentTimeMillis();
+									
+									
 									if(currPIC!=null){
 										currPIC.setUnselect();
 									}
@@ -136,7 +152,7 @@ public class LightCtrl extends Activity{
 									//colorContent.requestDisallowInterceptTouchEvent(true);//����������������������touch����
 									break;
 								case MotionEvent.ACTION_MOVE://����
-									Log.e("picker", "ACTION_MOVE");
+								//	Log.e("picker", "ACTION_MOVE");
 									int dx =(int)event.getRawX() - lastX;
 									int dy =(int)event.getRawY() - lastY;	
 									
@@ -170,21 +186,34 @@ public class LightCtrl extends Activity{
 									
 									int x = picker_centreX - color.getLeft();
 									int y = picker_centreY - color.getTop();
-									y = y+20; // У׼
+									y = y+30; // У׼
 									thiscolor = getColor(x, y);
 									((ZigbeeColorPicker)v).setColor(thiscolor);
 									v.layout(left, top, right, bottom);
-									Log.e("layout", left+","+top+","+right+","+bottom);
+									//Log.e("layout", left+","+top+","+right+","+bottom);
 									lastX = (int) event.getRawX();
 									lastY = (int) event.getRawY();
 									//colorContent.requestDisallowInterceptTouchEvent(true);//����������������������touch����
+									
+									nowTime = System.currentTimeMillis();
+									if(nowTime - startTime >perTime){
+										startTime = nowTime;
+										Log.e("demon","onmove");
+										hand.sendEmptyMessage(4);	
+										if(!colorisSending)
+										{
+											colorisSending = true;
+											doSendColorConfig();
+										}
+									}
+									
 									break;
 								case MotionEvent.ACTION_UP:
 									Log.e("picker", "ACTION_UP");
 									hand.sendEmptyMessage(4);
 									doSendColorConfig();
 									double all = Color.red(thiscolor)+Color.green(thiscolor)+Color.blue(thiscolor);
-									Log.e("demon", "r:"+Color.red(thiscolor)/all+" g:"+Color.green(thiscolor)/all+" b:"+Color.blue(thiscolor)/all);
+									//Log.e("demon", "r:"+Color.red(thiscolor)/all+" g:"+Color.green(thiscolor)/all+" b:"+Color.blue(thiscolor)/all);
 //									colorContent.requestDisallowInterceptTouchEvent(true);
 									break;
 								default:
@@ -204,6 +233,7 @@ public class LightCtrl extends Activity{
 				break;
 			case 4:
 				text.setBackgroundColor(thiscolor);
+				//doSendColorConfig();
 			default:
 				break;
 			}
@@ -271,7 +301,7 @@ public class LightCtrl extends Activity{
 			int py = colorBitmaphight*y/height2;
 			
 			int color = colorBitmap.getPixel(px, py);
-			Log.e("demon", "r:"+Color.red(thiscolor)+" g:"+Color.green(thiscolor)+" b:"+Color.blue(thiscolor));
+			//Log.e("demon", "r:"+Color.red(thiscolor)+" g:"+Color.green(thiscolor)+" b:"+Color.blue(thiscolor));
 			return color;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -305,7 +335,7 @@ public class LightCtrl extends Activity{
 		Log.d("fbb", "fbb bitmapWidth:"+colorBitmapwidth+" bitmapHeight:"+colorBitmaphight);
 		level.setMax(255);
 		level.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-			
+
 			@Override
 			public void onStopTrackingTouch(SeekBar arg0) {
 				// TODO Auto-generated method stub
@@ -315,45 +345,52 @@ public class LightCtrl extends Activity{
 			@Override
 			public void onStartTrackingTouch(SeekBar arg0) {
 				// TODO Auto-generated method stub
-				
+				levelstartTime = System.currentTimeMillis();
+				levelnowTime = System.currentTimeMillis();
 			}
 			
 			@Override
 			public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
 				// TODO Auto-generated method stub
-				
-			}
-			
-			
-			private synchronized void doLevelCHange(final int progress){
-				Log.w("SeekBar", ""+progress);
-				new Thread(new Runnable() {
-					
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						if(currPIC == null)
-							return ;
-						Payload pl = new Payload();
-						pl.setAttr((byte) 0x01);
-						pl.setLevel((byte) progress);
-						pl.setNw_addr(currPIC.getZigbeeNodeInfo().getNw_addr());
-						try {
-							zhlper.setNode(pl);
-							currPIC.getZigbeeNodeInfo().setLevel(progress);
-							hand.sendEmptyMessage(2);
-						} catch (ModuleException e) {
-							// TODO Auto-generated catch block
-							hand.sendEmptyMessage(3);
-							e.printStackTrace();
-						}
-					}
-				}).start();
+				levelnowTime = System.currentTimeMillis();
+				if(levelnowTime - levelstartTime > perTime){
+					System.out.println(levelnowTime+":"+levelstartTime);
+					levelstartTime = levelnowTime;
+					doLevelCHange(arg1);
+				}
 			}
 		});
 	}
+	private  void doLevelCHange(final int progress){
+		Log.w("SeekBar", ""+progress);
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				changelevel(progress);
+			}
+		}).start();
+	}
 	
-
+	private synchronized void changelevel(int progress){
+		Log.d("levelsend", "doLevelCHange");
+		if(currPIC == null)
+			return ;
+		Payload pl = new Payload();
+		pl.setAttr((byte) 0x01);
+		pl.setLevel((byte) progress);
+		pl.setNw_addr(currPIC.getZigbeeNodeInfo().getNw_addr());
+		try {
+			zhlper.setNode(pl);
+			currPIC.getZigbeeNodeInfo().setLevel(progress);
+			//hand.sendEmptyMessage(2);
+		} catch (ModuleException e) {
+			// TODO Auto-generated catch block
+			//hand.sendEmptyMessage(3);
+			e.printStackTrace();
+		}
+	}
 //	private void initData(){
 //		new Thread(new Runnable() {
 //			
@@ -372,27 +409,33 @@ public class LightCtrl extends Activity{
 //	} 
 	
 	
-	private void doSendColorConfig(){
+	private  void doSendColorConfig(){
 		new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				Payload pl = new Payload();
-				pl.setNw_addr(currPIC.getZigbeeNodeInfo().getNw_addr());
-				pl.setAttr((byte) 0x03);
-				pl.setColorx(getXY(thiscolor)[0]);
-				pl.setColory(getXY(thiscolor)[1]);
-				try {
-					zhlper.setNode(pl);
-					currPIC.getZigbeeNodeInfo().setcolorX(getXY(thiscolor)[0]);
-					currPIC.getZigbeeNodeInfo().setcolorY(getXY(thiscolor)[1]);
-				} catch (ModuleException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					changeColor();
+					colorisSending = false;
 			}
 		}).start();
+	}
+	
+	private synchronized void changeColor(){
+		Log.d("colorsend", "doSendColorConfig");
+		Payload pl = new Payload();
+		pl.setNw_addr(currPIC.getZigbeeNodeInfo().getNw_addr());
+		pl.setAttr((byte) 0x03);
+		pl.setColorx(getXY(thiscolor)[0]);
+		pl.setColory(getXY(thiscolor)[1]);
+		try {
+			zhlper.setNode(pl);
+			currPIC.getZigbeeNodeInfo().setcolorX(getXY(thiscolor)[0]);
+			currPIC.getZigbeeNodeInfo().setcolorY(getXY(thiscolor)[1]);
+		} catch (ModuleException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public short[] getXY(int thiscolor){
