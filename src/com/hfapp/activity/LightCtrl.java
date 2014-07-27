@@ -52,7 +52,7 @@ public class LightCtrl extends Activity{
 	long levelnowTime;
 	long startTime = 0;
 	long nowTime = 0;
-	long perTime = 200;
+	long perTime = 100;
 	
 	private String mac;
 	private ModuleInfo mi;
@@ -212,6 +212,8 @@ public class LightCtrl extends Activity{
 									Log.e("picker", "ACTION_UP");
 									hand.sendEmptyMessage(4);
 									doSendColorConfig();
+									doSendColorConfig();
+									doSendColorConfig();
 									double all = Color.red(thiscolor)+Color.green(thiscolor)+Color.blue(thiscolor);
 									//Log.e("demon", "r:"+Color.red(thiscolor)/all+" g:"+Color.green(thiscolor)/all+" b:"+Color.blue(thiscolor)/all);
 //									colorContent.requestDisallowInterceptTouchEvent(true);
@@ -297,9 +299,15 @@ public class LightCtrl extends Activity{
 			int width2 = color.getWidth();
 			int height2 = color.getHeight();
 			
+			if(width2 - x <= 40){
+				x = width2-1;
+			}
+			if(x< 40){
+				x = 1;
+			}
+			
 			int px = colorBitmapwidth*x/width2;
 			int py = colorBitmaphight*y/height2;
-			
 			int color = colorBitmap.getPixel(px, py);
 			//Log.e("demon", "r:"+Color.red(thiscolor)+" g:"+Color.green(thiscolor)+" b:"+Color.blue(thiscolor));
 			return color;
